@@ -57,7 +57,7 @@
       <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:2px solid #1c2735;align-items:start">
         <div>
           <div style="aspect-ratio:3/2;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16)">
-            <img src="assets/photos/2026-kids-science-day.png" alt="中研院兒童科學日" style="width:100%;height:100%;object-fit:cover;display:block">
+            <img loading="lazy" src="assets/photos/2026-kids-science-day.jpg" alt="中研院兒童科學日" style="width:100%;height:100%;object-fit:cover;display:block">
           </div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a;margin-top:10px">OUTREACH · ACADEMIA SINICA</div>
         </div>
@@ -78,7 +78,7 @@
       <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:2px solid #1c2735;align-items:start">
         <div>
           <div style="aspect-ratio:4/3;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16)">
-            <img src="assets/photos/0150dc_b02026e134034611be70d6b8a5db137e-mv2.webp" alt="與中研院合作研究" style="width:100%;height:100%;object-fit:cover;display:block">
+            <img loading="lazy" src="assets/photos/0150dc_b02026e134034611be70d6b8a5db137e-mv2.jpg" alt="與中研院合作研究" style="width:100%;height:100%;object-fit:cover;display:block">
           </div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a;margin-top:10px">FEATURED · SCIENCE ADVANCES 2025</div>
         </div>
@@ -161,7 +161,7 @@
   <div style="max-width:1160px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;gap:48px;padding:52px 32px;align-items:start">
     <div>
       <div style="width:220px;height:220px;margin-bottom:22px;border-radius:50%;overflow:hidden;background:#e7e3d6">
-        <img src="assets/photos/prof-portrait.jpg" alt="吳筠梅 Dr. Hsiao-Mei Wu" style="width:100%;height:100%;object-fit:cover;display:block">
+        <img loading="lazy" src="assets/photos/prof-portrait.jpg" alt="吳筠梅 Dr. Hsiao-Mei Wu" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:26px;margin:0 0 4px">吳筱梅</h2>
       <div style="font-size:15px;color:#a3813a;margin-bottom:18px">Dr. Hsiao-Mei Wu</div>
@@ -624,16 +624,16 @@ class Component extends DCLogic {
     const showGraduated = this.props.showGraduated ?? true;
 
     const homeSlides = [
-      { slot: 'home-slide-0', cap: '115-1 中研院兒童科學日', img: 'assets/photos/2026-kids-science-day.png' },
-      { slot: 'home-slide-1', cap: '114-1 導生宴', img: 'assets/photos/0150dc_b7b11e0f139c452883095c9e8e193998-mv2.png' },
-      { slot: 'home-slide-2', cap: '114-1 KU Professors Lab Tour', img: 'assets/photos/0150dc_649a79d9165f4f14892988359913b5ee-mv2.png' },
-      { slot: 'home-slide-3', cap: '114-1 Hokkaido University Professors Lab Tour', img: 'assets/photos/0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.png' },
-      { slot: 'home-slide-4', cap: '114-1 SNU Professors Lab Tour', img: 'assets/photos/0150dc_f77ca05f6e244bfdb0688f56a17dbe61-mv2.png' },
-      { slot: 'home-slide-5', cap: '114 教師節', img: 'assets/photos/0150dc_361b8c6ee63f4f3786dcc34245e2fbf1-mv2.png' },
-      { slot: 'home-slide-6', cap: '113-2 碩士生口試', img: 'assets/photos/0150dc_ed72f3b291d94cbea522534a9987cbdc-mv2.png' },
-      { slot: 'home-slide-7', cap: '113-2 謝師宴', img: 'assets/photos/0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.png' },
-      { slot: 'home-slide-8', cap: '113-2 UIUC 研討會前合影', img: 'assets/photos/0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.png' },
-      { slot: 'home-slide-9', cap: '113-1 導生聚', img: 'assets/photos/0150dc_94f3a22bed1a413cb06e807843792594-mv2.png' },
+      { slot: 'home-slide-0', cap: '115-1 中研院兒童科學日', img: 'assets/photos/2026-kids-science-day.jpg' },
+      { slot: 'home-slide-1', cap: '114-1 導生宴', img: 'assets/photos/0150dc_b7b11e0f139c452883095c9e8e193998-mv2.jpg' },
+      { slot: 'home-slide-2', cap: '114-1 KU Professors Lab Tour', img: 'assets/photos/0150dc_649a79d9165f4f14892988359913b5ee-mv2.jpg' },
+      { slot: 'home-slide-3', cap: '114-1 Hokkaido University Professors Lab Tour', img: 'assets/photos/0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.jpg' },
+      { slot: 'home-slide-4', cap: '114-1 SNU Professors Lab Tour', img: 'assets/photos/0150dc_f77ca05f6e244bfdb0688f56a17dbe61-mv2.jpg' },
+      { slot: 'home-slide-5', cap: '114 教師節', img: 'assets/photos/0150dc_361b8c6ee63f4f3786dcc34245e2fbf1-mv2.jpg' },
+      { slot: 'home-slide-6', cap: '113-2 碩士生口試', img: 'assets/photos/0150dc_ed72f3b291d94cbea522534a9987cbdc-mv2.jpg' },
+      { slot: 'home-slide-7', cap: '113-2 謝師宴', img: 'assets/photos/0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.jpg' },
+      { slot: 'home-slide-8', cap: '113-2 UIUC 研討會前合影', img: 'assets/photos/0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.jpg' },
+      { slot: 'home-slide-9', cap: '113-1 導生聚', img: 'assets/photos/0150dc_94f3a22bed1a413cb06e807843792594-mv2.jpg' },
     ];
     this._slideCount = homeSlides.length;
     const slideIdx = this.state.slideIdx;
@@ -681,29 +681,29 @@ class Component extends DCLogic {
     ];
 
     const researchTopics = [
-      { num: '01', zh: '螢光壽命', en: 'Fluorescence Lifetime', slot: 'rs-flim', ph: 'FLIM 成果圖', img: 'assets/photos/0150dc_c420c95c579847888744c7880d743f17-mv2.png' },
-      { num: '02', zh: '螢光成像', en: 'Fluorescence Imaging', slot: 'rs-fimg', ph: '螢光成像圖', img: 'assets/photos/0150dc_2fd3095de5504b48adfe1137b79ab8e7-mv2.png' },
-      { num: '03', zh: '細胞分割與追蹤', en: 'Cell Segmentation & Tracking', slot: 'rs-cell', ph: '細胞分割/追蹤圖', img: 'assets/photos/cell_segmentation.png' },
-      { num: '04', zh: '細胞培養', en: 'Cell Culture', slot: 'rs-culture', ph: '細胞培養照片', img: 'assets/photos/cell_culture.png' },
-      { num: '05', zh: '樂高顯微鏡', en: 'LEGO Microscope', slot: 'rs-lego', ph: '樂高顯微鏡照片', img: 'assets/photos/0150dc_18728f50adac4940b8a90c96919a9827-mv2.png' },
-      { num: '06', zh: 'LEMOLish 樂高光片顯微鏡', en: 'LEGO Light-Sheet Microscope', slot: 'rs-lemolish', ph: 'LEMOLish 照片', img: 'assets/photos/0150dc_5d3bef575dee470c9f28630a83c25f75-mv2.png' },
-      { num: '07', zh: '三維植物表型分析', en: '3D Plant Phenotyping', slot: 'rs-3d', ph: '番茄 3D 重建圖', img: 'assets/photos/0150dc_35dc411b208f44ecba4e98aff37be991-mv2.png' },
-      { num: '08', zh: '電子鼻應用', en: 'E-Nose Application', slot: 'rs-enose', ph: '電子鼻裝置照片', img: 'assets/photos/0150dc_581c7ad867b54e07903a5d1e95cd15dc-mv2.png' },
+      { num: '01', zh: '螢光壽命', en: 'Fluorescence Lifetime', slot: 'rs-flim', ph: 'FLIM 成果圖', img: 'assets/photos/0150dc_c420c95c579847888744c7880d743f17-mv2.jpg' },
+      { num: '02', zh: '螢光成像', en: 'Fluorescence Imaging', slot: 'rs-fimg', ph: '螢光成像圖', img: 'assets/photos/0150dc_2fd3095de5504b48adfe1137b79ab8e7-mv2.jpg' },
+      { num: '03', zh: '細胞分割與追蹤', en: 'Cell Segmentation & Tracking', slot: 'rs-cell', ph: '細胞分割/追蹤圖', img: 'assets/photos/cell_segmentation.jpg' },
+      { num: '04', zh: '細胞培養', en: 'Cell Culture', slot: 'rs-culture', ph: '細胞培養照片', img: 'assets/photos/cell_culture.jpg' },
+      { num: '05', zh: '樂高顯微鏡', en: 'LEGO Microscope', slot: 'rs-lego', ph: '樂高顯微鏡照片', img: 'assets/photos/0150dc_18728f50adac4940b8a90c96919a9827-mv2.jpg' },
+      { num: '06', zh: 'LEMOLish 樂高光片顯微鏡', en: 'LEGO Light-Sheet Microscope', slot: 'rs-lemolish', ph: 'LEMOLish 照片', img: 'assets/photos/0150dc_5d3bef575dee470c9f28630a83c25f75-mv2.jpg' },
+      { num: '07', zh: '三維植物表型分析', en: '3D Plant Phenotyping', slot: 'rs-3d', ph: '番茄 3D 重建圖', img: 'assets/photos/0150dc_35dc411b208f44ecba4e98aff37be991-mv2.jpg' },
+      { num: '08', zh: '電子鼻應用', en: 'E-Nose Application', slot: 'rs-enose', ph: '電子鼻裝置照片', img: 'assets/photos/0150dc_581c7ad867b54e07903a5d1e95cd15dc-mv2.jpg' },
     ];
 
     const WIX = 'assets/photos/';
     const allGroups = [
       { title: '博士班', en: 'PH.D. STUDENTS', items: [
-        { name: '林正浩', en: 'Cheng-Hao Lin', topic: 'Fluorescence Lifetime', slot: 'mb-chlin', img: WIX + '0150dc_66c3dd766d49436e886df1e36cc6cc3c-mv2.png' },
-        { name: '何佳鴻', en: 'Chia-Hong Ho', topic: 'Cell Tracking & Segmentation', slot: 'mb-chho', img: WIX + '0150dc_7963edbd762849939bd01927631fc8b7-mv2.png' },
+        { name: '林正浩', en: 'Cheng-Hao Lin', topic: 'Fluorescence Lifetime', slot: 'mb-chlin', img: WIX + '0150dc_66c3dd766d49436e886df1e36cc6cc3c-mv2.jpg' },
+        { name: '何佳鴻', en: 'Chia-Hong Ho', topic: 'Cell Tracking & Segmentation', slot: 'mb-chho', img: WIX + '0150dc_7963edbd762849939bd01927631fc8b7-mv2.jpg' },
       ]},
       { title: '碩士班・碩二', en: 'GRADUATE — SECOND YEAR', items: [
-        { name: '林磊', en: 'Lei Lin', topic: 'E-Nose Application', slot: 'mb-llin', img: WIX + '0150dc_e6f29a5be04e479188c9a4a54b3b4aeb-mv2.png' },
-        { name: '何愷育', en: 'Kai-Yu He', topic: '3D Reconstruction & Gantry Robot', slot: 'mb-kyhe', img: WIX + '0150dc_7e53cc7a328244139572bd0558f55f0d-mv2.png' },
-        { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + '0150dc_1a210870b73240ff9ce4583d7e7ed495-mv2.png' },
+        { name: '林磊', en: 'Lei Lin', topic: 'E-Nose Application', slot: 'mb-llin', img: WIX + '0150dc_e6f29a5be04e479188c9a4a54b3b4aeb-mv2.jpg' },
+        { name: '何愷育', en: 'Kai-Yu He', topic: '3D Reconstruction & Gantry Robot', slot: 'mb-kyhe', img: WIX + '0150dc_7e53cc7a328244139572bd0558f55f0d-mv2.jpg' },
+        { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + '0150dc_1a210870b73240ff9ce4583d7e7ed495-mv2.jpg' },
       ]},
       { title: '碩士班・碩一', en: 'GRADUATE — FIRST YEAR', items: [
-        { name: '張曉芹', en: 'Hsiao-Ching Chang', topic: '', slot: 'mb-hcchang', img: WIX + '0150dc_04a7325b63e24e08a9e3cba0d8caa5da-mv2.png' },
+        { name: '張曉芹', en: 'Hsiao-Ching Chang', topic: '', slot: 'mb-hcchang', img: WIX + '0150dc_04a7325b63e24e08a9e3cba0d8caa5da-mv2.jpg' },
         { name: '劉柏毅', en: 'Bo-Yi Liu', topic: '', slot: 'mb-byliu', img: '' },
         { name: '沈宸緯', en: 'Cheng-Wei Shen', topic: '', slot: 'mb-cwshen', img: '' },
       ]},
@@ -714,50 +714,50 @@ class Component extends DCLogic {
     ];
     if (showGraduated) {
       allGroups.push({ title: '畢業成員', en: 'GRADUATED MEMBERS', items: [
-        { name: '林泓佑', en: 'Hong-Yu Lin', topic: 'LEMOLish', slot: 'mb-hylin', img: WIX + '0150dc_fd7fd70a50904c3ba8bf12f96f7d02a1-mv2.png' },
-        { name: '彭子嫣', en: 'Tzu-Yen Peng', topic: 'Cell Culture', slot: 'mb-typeng', img: WIX + '0150dc_d7ed171e9f3c43a99ec2cd7c8d8cbc62-mv2.png' },
-        { name: '陳冠廷', en: 'Guan-Ting Chen', topic: '3D Reconstruction', slot: 'mb-gtchen', img: WIX + '0150dc_24bae696963c428ea10ff9cce365733e-mv2.png' },
-        { name: '陳靖濰', en: 'Ching-Wei Chen', topic: 'LEGO Microscope', slot: 'mb-cwchen', img: WIX + '0150dc_933a9af06f584db993aadcd85d3ca9a8-mv2.png' },
-        { name: '韋之皓', en: 'Jih-Hao Wei', topic: 'Cell and Beads Classification', slot: 'mb-jhwei', img: WIX + '0150dc_8589582524b54b86b6b627c3c6ed5a05-mv2.png' },
-        { name: '楊書愷', en: 'Shu-Kai Yang', topic: 'LEGO Microscope', slot: 'mb-skyang', img: WIX + '0150dc_b910e508280946f2b885daec1db5a316-mv2.png' },
-        { name: '易峻葦', en: 'Jiun-Wei Yi', topic: '3D Plant Phenotyping', slot: 'mb-jwyi', img: WIX + '0150dc_2d4383ded93b4b679f37fb764e77d74a-mv2.png' },
-        { name: '許又文', en: 'Yu-Wen Hsu', topic: 'Fluorescence Lifetime', slot: 'mb-ywhsu', img: WIX + '0150dc_a8059c9afd134a6b91836337675a1bcd-mv2.png' },
+        { name: '林泓佑', en: 'Hong-Yu Lin', topic: 'LEMOLish', slot: 'mb-hylin', img: WIX + '0150dc_fd7fd70a50904c3ba8bf12f96f7d02a1-mv2.jpg' },
+        { name: '彭子嫣', en: 'Tzu-Yen Peng', topic: 'Cell Culture', slot: 'mb-typeng', img: WIX + '0150dc_d7ed171e9f3c43a99ec2cd7c8d8cbc62-mv2.jpg' },
+        { name: '陳冠廷', en: 'Guan-Ting Chen', topic: '3D Reconstruction', slot: 'mb-gtchen', img: WIX + '0150dc_24bae696963c428ea10ff9cce365733e-mv2.jpg' },
+        { name: '陳靖濰', en: 'Ching-Wei Chen', topic: 'LEGO Microscope', slot: 'mb-cwchen', img: WIX + '0150dc_933a9af06f584db993aadcd85d3ca9a8-mv2.jpg' },
+        { name: '韋之皓', en: 'Jih-Hao Wei', topic: 'Cell and Beads Classification', slot: 'mb-jhwei', img: WIX + '0150dc_8589582524b54b86b6b627c3c6ed5a05-mv2.jpg' },
+        { name: '楊書愷', en: 'Shu-Kai Yang', topic: 'LEGO Microscope', slot: 'mb-skyang', img: WIX + '0150dc_b910e508280946f2b885daec1db5a316-mv2.jpg' },
+        { name: '易峻葦', en: 'Jiun-Wei Yi', topic: '3D Plant Phenotyping', slot: 'mb-jwyi', img: WIX + '0150dc_2d4383ded93b4b679f37fb764e77d74a-mv2.jpg' },
+        { name: '許又文', en: 'Yu-Wen Hsu', topic: 'Fluorescence Lifetime', slot: 'mb-ywhsu', img: WIX + '0150dc_a8059c9afd134a6b91836337675a1bcd-mv2.jpg' },
       ]});
       allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', items: [
-        { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.png' },
-        { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.png' },
-        { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.png' },
+        { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.jpg' },
+        { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.jpg' },
+        { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.jpg' },
       ]});
     }
 
     const courses = [
-      { num: '01', zh: '電子學與實習', en: 'Electronics and Laboratory', sem: '114-2', url: 'https://course.ntu.edu.tw/courses/114-2/40952', slot: 'cs-electronics', extra: false, extraUrl: '', img: WIX + '0150dc_e8d9bc8bb9124151a28ebaf45b1fb7f6-mv2.png' },
+      { num: '01', zh: '電子學與實習', en: 'Electronics and Laboratory', sem: '114-2', url: 'https://course.ntu.edu.tw/courses/114-2/40952', slot: 'cs-electronics', extra: false, extraUrl: '', img: WIX + '0150dc_e8d9bc8bb9124151a28ebaf45b1fb7f6-mv2.jpg' },
       { num: '02', zh: '機電整合與系統設計', en: 'Mechatronics and System Design', sem: '114-1', url: 'https://course.ntu.edu.tw/courses/114-1/10366', slot: 'cs-mechatronics', extra: true, extraUrl: 'https://drive.google.com/drive/folders/155ZBtdiGrDPaRlmpbyhdiE6BRYe6MV05?usp=drive_link', img: WIX + '0150dc_b8ed48bf238f46c8be1f0e4beb57d0a1-mv2.jpg' },
-      { num: '03', zh: '生物光機電系統技術與應用', en: 'Bio-Mechatronics', sem: '113-2', url: 'https://course.ntu.edu.tw/courses/113-2/36514', slot: 'cs-biomech', extra: false, extraUrl: '', img: WIX + '0150dc_ae2dfdaded294693a3d2db3708127eb9-mv2.png' },
+      { num: '03', zh: '生物光機電系統技術與應用', en: 'Bio-Mechatronics', sem: '113-2', url: 'https://course.ntu.edu.tw/courses/113-2/36514', slot: 'cs-biomech', extra: false, extraUrl: '', img: WIX + '0150dc_ae2dfdaded294693a3d2db3708127eb9-mv2.jpg' },
       { num: '04', zh: '器官晶片原理應用及實作', en: 'The Principle, Application and Practice of Organ Microarrays', sem: '114-2', url: 'https://course.ntu.edu.tw/courses/114-2/38025', slot: 'cs-organchip', extra: false, extraUrl: '', img: WIX + 'nsplsh_64ff94331d8347d490592a3c314fa701-mv2.jpg' },
     ];
 
     const events = [
-      { sem: '115-1', label: '中研院兒童科學日', slot: 'ev-00', img: 'assets/photos/2026-kids-science-day.png' },
-      { sem: '115', label: '教師節', slot: 'ev-00b', img: 'assets/photos/115-teachers-day.png' },
-      { sem: '114', label: '碩士生口試', slot: 'ev-00c', img: 'assets/photos/114-oral-defense.png' },
-      { sem: '114-1', label: '導生宴', slot: 'ev-01', img: WIX + '0150dc_b7b11e0f139c452883095c9e8e193998-mv2.png' },
-      { sem: '114-1', label: 'KU Professors Taipei Tour', slot: 'ev-02', img: WIX + '0150dc_3a11aa44ef0a42ea9585dc30920a291a-mv2.png' },
-      { sem: '114-1', label: 'KU Professors Lab Tour', slot: 'ev-03', img: WIX + '0150dc_649a79d9165f4f14892988359913b5ee-mv2.png' },
-      { sem: '114-1', label: "HU Prof's Taipei Tour", slot: 'ev-04', img: WIX + '0150dc_7b39e7544cb548c69ba69aa1be4f68c1-mv2.png' },
-      { sem: '114-1', label: 'Hokkaido University Professors Lab Tour', slot: 'ev-05', img: WIX + '0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.png' },
-      { sem: '114-1', label: 'SNU Professors Lab Tour', slot: 'ev-06', img: WIX + '0150dc_f77ca05f6e244bfdb0688f56a17dbe61-mv2.png' },
-      { sem: '114-1', label: 'Non-Destructive Conference Lab Tour', slot: 'ev-07', img: WIX + '0150dc_fa37a6b7ea4b4a5dad7e23aff1e45ad4-mv2.png' },
-      { sem: '114', label: '教師節', slot: 'ev-08', img: WIX + '0150dc_361b8c6ee63f4f3786dcc34245e2fbf1-mv2.png' },
-      { sem: '113-2', label: '碩士生口試', slot: 'ev-09', img: WIX + '0150dc_ed72f3b291d94cbea522534a9987cbdc-mv2.png' },
-      { sem: '113-2', label: '謝師宴', slot: 'ev-10', img: WIX + '0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.png' },
-      { sem: '113-2', label: 'UIUC 研討會前合影', slot: 'ev-11', img: WIX + '0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.png' },
-      { sem: '113-1', label: '導生聚', slot: 'ev-12', img: WIX + '0150dc_94f3a22bed1a413cb06e807843792594-mv2.png' },
-      { sem: '113-1', label: '碩士口試', slot: 'ev-13', img: WIX + '0150dc_a7cad689975742628576bfd34202195e-mv2.png' },
-      { sem: '113-1', label: 'Non-Destructive Lab Tour', slot: 'ev-14', img: WIX + '0150dc_ae8e19545f8b4fd8b4fcf7c023598b47-mv2.png' },
-      { sem: '113-1', label: 'Prof. Zahid Visit', slot: 'ev-15', img: WIX + '0150dc_cc2d0dfcf5c84c41a5e656c200d56610-mv2.png' },
-      { sem: '112-2', label: '碩士口試', slot: 'ev-16', img: WIX + '0150dc_e480c5aaa0a848ab913a594bc0d4f6d7-mv2.png' },
-      { sem: '112-2', label: '畢業生', slot: 'ev-17', img: WIX + '0150dc_04116ae408d043bd809d05ad7dd09477-mv2.png' },
+      { sem: '115-1', label: '中研院兒童科學日', slot: 'ev-00', img: 'assets/photos/2026-kids-science-day.jpg' },
+      { sem: '115', label: '教師節', slot: 'ev-00b', img: 'assets/photos/115-teachers-day.jpg' },
+      { sem: '114', label: '碩士生口試', slot: 'ev-00c', img: 'assets/photos/114-oral-defense.jpg' },
+      { sem: '114-1', label: '導生宴', slot: 'ev-01', img: WIX + '0150dc_b7b11e0f139c452883095c9e8e193998-mv2.jpg' },
+      { sem: '114-1', label: 'KU Professors Taipei Tour', slot: 'ev-02', img: WIX + '0150dc_3a11aa44ef0a42ea9585dc30920a291a-mv2.jpg' },
+      { sem: '114-1', label: 'KU Professors Lab Tour', slot: 'ev-03', img: WIX + '0150dc_649a79d9165f4f14892988359913b5ee-mv2.jpg' },
+      { sem: '114-1', label: "HU Prof's Taipei Tour", slot: 'ev-04', img: WIX + '0150dc_7b39e7544cb548c69ba69aa1be4f68c1-mv2.jpg' },
+      { sem: '114-1', label: 'Hokkaido University Professors Lab Tour', slot: 'ev-05', img: WIX + '0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.jpg' },
+      { sem: '114-1', label: 'SNU Professors Lab Tour', slot: 'ev-06', img: WIX + '0150dc_f77ca05f6e244bfdb0688f56a17dbe61-mv2.jpg' },
+      { sem: '114-1', label: 'Non-Destructive Conference Lab Tour', slot: 'ev-07', img: WIX + '0150dc_fa37a6b7ea4b4a5dad7e23aff1e45ad4-mv2.jpg' },
+      { sem: '114', label: '教師節', slot: 'ev-08', img: WIX + '0150dc_361b8c6ee63f4f3786dcc34245e2fbf1-mv2.jpg' },
+      { sem: '113-2', label: '碩士生口試', slot: 'ev-09', img: WIX + '0150dc_ed72f3b291d94cbea522534a9987cbdc-mv2.jpg' },
+      { sem: '113-2', label: '謝師宴', slot: 'ev-10', img: WIX + '0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.jpg' },
+      { sem: '113-2', label: 'UIUC 研討會前合影', slot: 'ev-11', img: WIX + '0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.jpg' },
+      { sem: '113-1', label: '導生聚', slot: 'ev-12', img: WIX + '0150dc_94f3a22bed1a413cb06e807843792594-mv2.jpg' },
+      { sem: '113-1', label: '碩士口試', slot: 'ev-13', img: WIX + '0150dc_a7cad689975742628576bfd34202195e-mv2.jpg' },
+      { sem: '113-1', label: 'Non-Destructive Lab Tour', slot: 'ev-14', img: WIX + '0150dc_ae8e19545f8b4fd8b4fcf7c023598b47-mv2.jpg' },
+      { sem: '113-1', label: 'Prof. Zahid Visit', slot: 'ev-15', img: WIX + '0150dc_cc2d0dfcf5c84c41a5e656c200d56610-mv2.jpg' },
+      { sem: '112-2', label: '碩士口試', slot: 'ev-16', img: WIX + '0150dc_e480c5aaa0a848ab913a594bc0d4f6d7-mv2.jpg' },
+      { sem: '112-2', label: '畢業生', slot: 'ev-17', img: WIX + '0150dc_04116ae408d043bd809d05ad7dd09477-mv2.jpg' },
     ];
 
     const pubJournals = [

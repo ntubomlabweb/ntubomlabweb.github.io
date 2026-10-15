@@ -160,10 +160,13 @@ if (showGraduated) {
   - `width:1000%`（= 張數 × 100%）
   - `flex:0 0 10%;width:10%`（= 100 ÷ 張數 %）
   - `hint-placeholder-count="10"`
-- 預設做法：新增一張放最上面，**同時刪除最後一張**，維持 10 張。
-- 若使用者明確要改張數，三處都要一起改（例：12 張 → `1200%`、`8.3333%`、`12`）。
-- `cap` 格式：`<學期> <活動名>`，不加英文。
-- 新照片通常也要同時加到 `events`（花絮）；問使用者或依指令判斷。
+- **規則：首頁幻燈片 = `events`（花絮）最上面（最新）的 10 張，順序相同。**
+  - 每次 `events` 有新增或刪除，都要重新同步 `homeSlides`：新照片依花絮順序插入，超出 10 張的最舊幾張從 `homeSlides` 移除（花絮頁保留不動）。
+  - 仍留在幻燈片中的照片**保留原本的 `slot`**；新加入的照片給新的唯一 slot（`home-slide-<下一個未用過的數字>`，grep 確認不重複）。
+  - 只想加首頁、不加花絮的照片不存在；若使用者要求「放首頁」，就先加到 `events` 最上面，再同步。
+- 若使用者明確要改張數，三處都要一起改（例：12 張 → `1200%`、`8.3333%`、`12`），並改為同步最新 N 張。
+- `cap` 格式：`<sem> <label>`，直接沿用該照片在 `events` 中的學期與活動名（含英文活動名）。label 含單引號時，該字串改用雙引號包住。
+- 同步後驗證：`homeSlides` 的照片順序與 `events` 前 10 筆一致。
 
 ### 3-4. 最新消息（模板，`<!-- news -->` 之後）
 
@@ -317,8 +320,8 @@ python -c "from PIL import Image; im=Image.open('input.png').convert('RGB'); im.
 | 「新增碩一成員 王小明 Xiao-Ming Wang」 | `allGroups` 碩一 items 加一筆，`slot: 'mb-xmwang'`，`img: ''`；回報缺照片與研究主題 |
 | 「王小明的照片是 uploads/wang.png」 | 壓縮為 `assets/photos/mb-xmwang.jpg`，更新 `img: WIX + 'mb-xmwang.jpg'` |
 | 「學年更新：碩二畢業、碩一升碩二，新碩一有 A、B」 | 依 3-1 搬移，再新增 A、B |
-| 「把 uploads/party.jpg 加到花絮，115-1 聖誕派對」 | 壓縮→`115-1-christmas.jpg`；`events` 最上面新增 |
-| 「這張也放首頁幻燈片」 | `homeSlides` 最上面新增、刪最後一張 |
+| 「把 uploads/party.jpg 加到花絮，115-1 聖誕派對」 | 壓縮→`115-1-christmas.jpg`；`events` 最上面新增；`homeSlides` 同步為花絮最新 10 張 |
+| 「這張也放首頁幻燈片」 | 確認已在 `events`（沒有就加到最上面），再將 `homeSlides` 同步為花絮最新 10 張 |
 | 「新增最新消息：2026.12 恭喜 XXX 獲獎」 | news 區最上方插入純文字消息，文字原樣 |
 | 「新增研討會論文：<引用>」 | `pubConfs` 最上面新增，`num: '00'` |
 | 「新增期刊論文：<引用>」 | `pubJournals` 最上面新增 `'01'`，其餘重編號 |

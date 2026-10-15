@@ -236,6 +236,22 @@
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
           <sc-for list="{{ grp.items }}" as="mb" hint-placeholder-count="4">
+            <sc-if value="{{ mb.noPage }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:14px 12px;border-top:1px solid #cbc8b8;border-radius:8px">
+              <div style="width:76px;height:76px">
+                {{ mb.imgEl }}
+              </div>
+              <div>
+                <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+                  <span style="font-weight:700;font-size:16px">{{ mb.name }}</span>
+                  <span style="font-size:12px;color:#7d8494">{{ mb.en }}</span>
+                </div>
+                <div style="font-size:12.5px;color:#2c4a6e;margin-top:4px;line-height:1.5">{{ mb.topic }}</div>
+              </div>
+              <span></span>
+            </div>
+            </sc-if>
+            <sc-if value="{{ mb.hasPage }}" hint-placeholder-val="{{ true }}">
             <div onClick="{{ mb.onClick }}" style="display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:14px 12px;border-top:1px solid #cbc8b8;border-radius:8px;cursor:pointer;transition:all .22s" style-hover="background:#ffffff;box-shadow:0 8px 22px rgba(22,40,62,.12);transform:translateY(-2px)">
               <div style="width:76px;height:76px">
                 {{ mb.imgEl }}
@@ -249,6 +265,7 @@
               </div>
               <span style="font-size:15px;color:#a3813a;transition:transform .2s" style-hover="transform:translateX(3px)">→</span>
             </div>
+            </sc-if>
           </sc-for>
         </div>
       </div>
@@ -549,8 +566,9 @@ class Component extends DCLogic {
 
   applyHash() {
     const h = decodeURIComponent((location.hash || '').replace(/^#\/?/, ''));
-    const [p, mk] = h.split('/');
+    let [p, mk] = h.split('/');
     if (!p || !this.validPage(p)) return false;
+    if (p === 'member' && this._noPageSlots && this._noPageSlots.includes(mk)) { history.replaceState(null, '', '#members'); p = 'members'; mk = undefined; }
     this.setState(p === 'member' ? { page: 'member', selectedMember: mk || null } : { page: p });
     try { localStorage.setItem('bomlab-page', p); if (mk) localStorage.setItem('bomlab-member', mk); } catch (e) {}
     try { window.scrollTo(0, 0); } catch (e) {}
@@ -723,7 +741,7 @@ class Component extends DCLogic {
         { name: '易峻葦', en: 'Jiun-Wei Yi', topic: '3D Plant Phenotyping', slot: 'mb-jwyi', img: WIX + '0150dc_2d4383ded93b4b679f37fb764e77d74a-mv2.jpg' },
         { name: '許又文', en: 'Yu-Wen Hsu', topic: 'Fluorescence Lifetime', slot: 'mb-ywhsu', img: WIX + '0150dc_a8059c9afd134a6b91836337675a1bcd-mv2.jpg' },
       ]});
-      allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', items: [
+      allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', noPage: true, items: [
         { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.jpg' },
         { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.jpg' },
         { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.jpg' },
@@ -843,12 +861,14 @@ class Component extends DCLogic {
       items: g.items.map(m => ({
         ...m,
         role: g.title,
+        noPage: !!g.noPage, hasPage: !g.noPage,
         onClick: () => this.goMember(m.slot),
         imgEl: m.img ? mkImg(m.img, m.name, avatarStyle) : React.createElement('div', { style: { width: '100%', height: '100%', borderRadius: '10px', background: '#e7e3d6', color: '#a3813a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Noto Serif TC', serif", fontSize: '30px', fontWeight: 600 } }, m.name.charAt(0)),
       })),
     }));
     const flatMembers = [];
-    memberGroups.forEach(g => g.items.forEach(m => flatMembers.push(m)));
+    memberGroups.forEach(g => g.items.forEach(m => { if (m.hasPage) flatMembers.push(m); }));
+    this._noPageSlots = allGroups.filter(g => g.noPage).flatMap(g => g.items.map(m => m.slot));
     const cm = flatMembers.find(m => m.slot === this.state.selectedMember) || flatMembers[0] || {};
     const currentMember = {
       name: cm.name || '', en: cm.en || '', topic: cm.topic || '', role: cm.role || '',

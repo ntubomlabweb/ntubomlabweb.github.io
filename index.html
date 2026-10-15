@@ -54,7 +54,28 @@
   <div style="max-width:1160px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:36px;padding:64px 32px;border-bottom:1px solid #cbc8b8">
     <div style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:28px;line-height:1.4">最新<br>消息<div style="font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:11px;letter-spacing:.2em;color:#a3813a;margin-top:8px">NEWS</div></div>
     <div style="display:flex;flex-direction:column">
-      <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:8px 0 30px;border-top:2px solid #1c2735;padding-top:26px;align-items:start">
+      <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:2px solid #1c2735;align-items:start">
+        <div>
+          <div style="aspect-ratio:3/2;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16)">
+            <img src="assets/photos/2026-kids-science-day.png" alt="中研院兒童科學日" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a;margin-top:10px">OUTREACH · ACADEMIA SINICA</div>
+        </div>
+        <div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a">2026.10.03</span>
+          <div style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:26px;line-height:1.45;margin:8px 0 12px">中研院兒童科學日</div>
+          <p style="font-size:15px;line-height:2;color:#4d5a6b;margin:0 0 18px">實驗室成員參與中研院兒童科學日活動。</p>
+          <div style="display:flex;gap:22px;font-size:13px;flex-wrap:wrap">
+            <span onClick="{{ goPhotos }}" style="border-bottom:1px solid #2c4a6e;cursor:pointer;color:#2c4a6e">花絮 →</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:100px 1fr auto;gap:20px;align-items:baseline;padding:18px 0;border-top:1px solid #cbc8b8;margin-bottom:24px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px">2026.10</span>
+        <span style="font-size:15px;font-weight:500;line-height:1.7;color:#4d5a6b">恭喜林正浩同學於 2026 生機農機研討會榮獲優勝論文獎！</span>
+        <span></span>
+      </div>
+      <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:2px solid #1c2735;align-items:start">
         <div>
           <div style="aspect-ratio:4/3;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16)">
             <img src="assets/photos/0150dc_b02026e134034611be70d6b8a5db137e-mv2.webp" alt="與中研院合作研究" style="width:100%;height:100%;object-fit:cover;display:block">
@@ -506,22 +527,43 @@ class Component extends DCLogic {
   state = { page: 'home', slideIdx: 0, selectedMember: null };
 
   componentDidMount() {
-    try {
-      const p = localStorage.getItem('bomlab-page');
-      if (p && ['home','prof','research','members','courses','photos','contact','pubs','member'].includes(p)) {
-        this.setState({ page: p });
-        if (p === 'member') {
-          const mk = localStorage.getItem('bomlab-member');
-          if (mk) this.setState({ selectedMember: mk });
-        }
-      }
-    } catch (e) {}
+    this._onHash = () => this.applyHash();
+    window.addEventListener('hashchange', this._onHash);
+    if (!this.applyHash()) {
+      try {
+        const p = localStorage.getItem('bomlab-page');
+        const mk = localStorage.getItem('bomlab-member');
+        if (p && this.validPage(p)) history.replaceState(null, '', '#' + (p === 'member' && mk ? 'member/' + mk : p));
+        this.applyHash();
+      } catch (e) {}
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this._onHash);
+  }
+
+  validPage(p) {
+    return ['home','prof','research','members','courses','photos','contact','pubs','member'].includes(p);
+  }
+
+  applyHash() {
+    const h = decodeURIComponent((location.hash || '').replace(/^#\/?/, ''));
+    const [p, mk] = h.split('/');
+    if (!p || !this.validPage(p)) return false;
+    this.setState(p === 'member' ? { page: 'member', selectedMember: mk || null } : { page: p });
+    try { localStorage.setItem('bomlab-page', p); if (mk) localStorage.setItem('bomlab-member', mk); } catch (e) {}
+    try { window.scrollTo(0, 0); } catch (e) {}
+    return true;
+  }
+
+  nav(hash) {
+    if (location.hash === '#' + hash) { this.applyHash(); return; }
+    location.hash = hash;
   }
 
   go(key) {
-    this.setState({ page: key });
-    try { localStorage.setItem('bomlab-page', key); } catch (e) {}
-    try { window.scrollTo(0, 0); } catch (e) {}
+    this.nav(key);
   }
 
   moveSlide(dir) {
@@ -530,9 +572,7 @@ class Component extends DCLogic {
   }
 
   goMember(key) {
-    this.setState({ page: 'member', selectedMember: key });
-    try { localStorage.setItem('bomlab-page', 'member'); localStorage.setItem('bomlab-member', key); } catch (e) {}
-    try { window.scrollTo(0, 0); } catch (e) {}
+    this.nav('member/' + key);
   }
 
   orbSetup(el) {
@@ -584,6 +624,7 @@ class Component extends DCLogic {
     const showGraduated = this.props.showGraduated ?? true;
 
     const homeSlides = [
+      { slot: 'home-slide-0', cap: '115-1 中研院兒童科學日', img: 'assets/photos/2026-kids-science-day.png' },
       { slot: 'home-slide-1', cap: '114-1 導生宴', img: 'assets/photos/0150dc_b7b11e0f139c452883095c9e8e193998-mv2.png' },
       { slot: 'home-slide-2', cap: '114-1 KU Professors Lab Tour', img: 'assets/photos/0150dc_649a79d9165f4f14892988359913b5ee-mv2.png' },
       { slot: 'home-slide-3', cap: '114-1 Hokkaido University Professors Lab Tour', img: 'assets/photos/0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.png' },
@@ -593,7 +634,6 @@ class Component extends DCLogic {
       { slot: 'home-slide-7', cap: '113-2 謝師宴', img: 'assets/photos/0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.png' },
       { slot: 'home-slide-8', cap: '113-2 UIUC 研討會前合影', img: 'assets/photos/0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.png' },
       { slot: 'home-slide-9', cap: '113-1 導生聚', img: 'assets/photos/0150dc_94f3a22bed1a413cb06e807843792594-mv2.png' },
-      { slot: 'home-slide-10', cap: '112-2 畢業生', img: 'assets/photos/0150dc_04116ae408d043bd809d05ad7dd09477-mv2.png' },
     ];
     this._slideCount = homeSlides.length;
     const slideIdx = this.state.slideIdx;
@@ -658,29 +698,35 @@ class Component extends DCLogic {
         { name: '何佳鴻', en: 'Chia-Hong Ho', topic: 'Cell Tracking & Segmentation', slot: 'mb-chho', img: WIX + '0150dc_7963edbd762849939bd01927631fc8b7-mv2.png' },
       ]},
       { title: '碩士班・碩二', en: 'GRADUATE — SECOND YEAR', items: [
-        { name: '林泓佑', en: 'Hong-Yu Lin', topic: 'LEMOLish', slot: 'mb-hylin', img: WIX + '0150dc_fd7fd70a50904c3ba8bf12f96f7d02a1-mv2.png' },
-        { name: '彭子嫣', en: 'Tzu-Yen Peng', topic: 'Cell Culture', slot: 'mb-typeng', img: WIX + '0150dc_d7ed171e9f3c43a99ec2cd7c8d8cbc62-mv2.png' },
-        { name: '陳冠廷', en: 'Guan-Ting Chen', topic: '3D Reconstruction', slot: 'mb-gtchen', img: WIX + '0150dc_24bae696963c428ea10ff9cce365733e-mv2.png' },
-        { name: '陳靖濰', en: 'Ching-Wei Chen', topic: 'LEGO Microscope', slot: 'mb-cwchen', img: WIX + '0150dc_933a9af06f584db993aadcd85d3ca9a8-mv2.png' },
-      ]},
-      { title: '碩士班・碩一', en: 'GRADUATE — FIRST YEAR', items: [
         { name: '林磊', en: 'Lei Lin', topic: 'E-Nose Application', slot: 'mb-llin', img: WIX + '0150dc_e6f29a5be04e479188c9a4a54b3b4aeb-mv2.png' },
         { name: '何愷育', en: 'Kai-Yu He', topic: '3D Reconstruction & Gantry Robot', slot: 'mb-kyhe', img: WIX + '0150dc_7e53cc7a328244139572bd0558f55f0d-mv2.png' },
         { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + '0150dc_1a210870b73240ff9ce4583d7e7ed495-mv2.png' },
       ]},
+      { title: '碩士班・碩一', en: 'GRADUATE — FIRST YEAR', items: [
+        { name: '張曉芹', en: 'Hsiao-Ching Chang', topic: '', slot: 'mb-hcchang', img: WIX + '0150dc_04a7325b63e24e08a9e3cba0d8caa5da-mv2.png' },
+        { name: '劉柏毅', en: 'Bo-Yi Liu', topic: '', slot: 'mb-byliu', img: '' },
+        { name: '沈宸緯', en: 'Cheng-Wei Shen', topic: '', slot: 'mb-cwshen', img: '' },
+      ]},
       { title: '大學部專題生', en: 'B.S. STUDENTS', items: [
-        { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.png' },
-        { name: '張曉芹', en: '', topic: '', slot: 'mb-hcchang', img: WIX + '0150dc_04a7325b63e24e08a9e3cba0d8caa5da-mv2.png' },
-        { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.png' },
-        { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.png' },
+        { name: '沈新倫', en: 'Shin-Lun Shen', topic: '', slot: 'mb-slshen', img: '' },
+        { name: '郭以澂', en: 'Yi-Cheng Kuo', topic: '', slot: 'mb-yckuo', img: '' },
       ]},
     ];
     if (showGraduated) {
       allGroups.push({ title: '畢業成員', en: 'GRADUATED MEMBERS', items: [
+        { name: '林泓佑', en: 'Hong-Yu Lin', topic: 'LEMOLish', slot: 'mb-hylin', img: WIX + '0150dc_fd7fd70a50904c3ba8bf12f96f7d02a1-mv2.png' },
+        { name: '彭子嫣', en: 'Tzu-Yen Peng', topic: 'Cell Culture', slot: 'mb-typeng', img: WIX + '0150dc_d7ed171e9f3c43a99ec2cd7c8d8cbc62-mv2.png' },
+        { name: '陳冠廷', en: 'Guan-Ting Chen', topic: '3D Reconstruction', slot: 'mb-gtchen', img: WIX + '0150dc_24bae696963c428ea10ff9cce365733e-mv2.png' },
+        { name: '陳靖濰', en: 'Ching-Wei Chen', topic: 'LEGO Microscope', slot: 'mb-cwchen', img: WIX + '0150dc_933a9af06f584db993aadcd85d3ca9a8-mv2.png' },
         { name: '韋之皓', en: 'Jih-Hao Wei', topic: 'Cell and Beads Classification', slot: 'mb-jhwei', img: WIX + '0150dc_8589582524b54b86b6b627c3c6ed5a05-mv2.png' },
         { name: '楊書愷', en: 'Shu-Kai Yang', topic: 'LEGO Microscope', slot: 'mb-skyang', img: WIX + '0150dc_b910e508280946f2b885daec1db5a316-mv2.png' },
         { name: '易峻葦', en: 'Jiun-Wei Yi', topic: '3D Plant Phenotyping', slot: 'mb-jwyi', img: WIX + '0150dc_2d4383ded93b4b679f37fb764e77d74a-mv2.png' },
         { name: '許又文', en: 'Yu-Wen Hsu', topic: 'Fluorescence Lifetime', slot: 'mb-ywhsu', img: WIX + '0150dc_a8059c9afd134a6b91836337675a1bcd-mv2.png' },
+      ]});
+      allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', items: [
+        { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.png' },
+        { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.png' },
+        { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.png' },
       ]});
     }
 
@@ -692,6 +738,9 @@ class Component extends DCLogic {
     ];
 
     const events = [
+      { sem: '115-1', label: '中研院兒童科學日', slot: 'ev-00', img: 'assets/photos/2026-kids-science-day.png' },
+      { sem: '115', label: '教師節', slot: 'ev-00b', img: 'assets/photos/115-teachers-day.png' },
+      { sem: '114', label: '碩士生口試', slot: 'ev-00c', img: 'assets/photos/114-oral-defense.png' },
       { sem: '114-1', label: '導生宴', slot: 'ev-01', img: WIX + '0150dc_b7b11e0f139c452883095c9e8e193998-mv2.png' },
       { sem: '114-1', label: 'KU Professors Taipei Tour', slot: 'ev-02', img: WIX + '0150dc_3a11aa44ef0a42ea9585dc30920a291a-mv2.png' },
       { sem: '114-1', label: 'KU Professors Lab Tour', slot: 'ev-03', img: WIX + '0150dc_649a79d9165f4f14892988359913b5ee-mv2.png' },
@@ -795,7 +844,7 @@ class Component extends DCLogic {
         ...m,
         role: g.title,
         onClick: () => this.goMember(m.slot),
-        imgEl: mkImg(m.img, m.name, avatarStyle),
+        imgEl: m.img ? mkImg(m.img, m.name, avatarStyle) : React.createElement('div', { style: { width: '100%', height: '100%', borderRadius: '10px', background: '#e7e3d6', color: '#a3813a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Noto Serif TC', serif", fontSize: '30px', fontWeight: 600 } }, m.name.charAt(0)),
       })),
     }));
     const flatMembers = [];
@@ -803,7 +852,7 @@ class Component extends DCLogic {
     const cm = flatMembers.find(m => m.slot === this.state.selectedMember) || flatMembers[0] || {};
     const currentMember = {
       name: cm.name || '', en: cm.en || '', topic: cm.topic || '', role: cm.role || '',
-      imgEl: mkImg(cm.img, cm.name, { width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }),
+      imgEl: cm.img ? mkImg(cm.img, cm.name, { width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }) : React.createElement('div', { style: { aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a3813a', fontFamily: "'Noto Serif TC', serif", fontSize: '96px', fontWeight: 600 } }, (cm.name || '').charAt(0)),
     };
     const eventsEl = events.map(e => ({ ...e, imgEl: mkImg(e.img, e.label, { width: '100%', height: 'auto', display: 'block' }) }));
     const coursesEl = courses.map(c => ({ ...c, imgEl: mkImg(c.img, c.zh, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }) }));

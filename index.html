@@ -236,22 +236,6 @@
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
           <sc-for list="{{ grp.items }}" as="mb" hint-placeholder-count="4">
-            <sc-if value="{{ mb.noPage }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:14px 12px;border-top:1px solid #cbc8b8;border-radius:8px">
-              <div style="width:76px;height:76px">
-                {{ mb.imgEl }}
-              </div>
-              <div>
-                <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
-                  <span style="font-weight:700;font-size:16px">{{ mb.name }}</span>
-                  <span style="font-size:12px;color:#7d8494">{{ mb.en }}</span>
-                </div>
-                <div style="font-size:12.5px;color:#2c4a6e;margin-top:4px;line-height:1.5">{{ mb.topic }}</div>
-              </div>
-              <span></span>
-            </div>
-            </sc-if>
-            <sc-if value="{{ mb.hasPage }}" hint-placeholder-val="{{ true }}">
             <div onClick="{{ mb.onClick }}" style="display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:14px 12px;border-top:1px solid #cbc8b8;border-radius:8px;cursor:pointer;transition:all .22s" style-hover="background:#ffffff;box-shadow:0 8px 22px rgba(22,40,62,.12);transform:translateY(-2px)">
               <div style="width:76px;height:76px">
                 {{ mb.imgEl }}
@@ -265,7 +249,6 @@
               </div>
               <span style="font-size:15px;color:#a3813a;transition:transform .2s" style-hover="transform:translateX(3px)">→</span>
             </div>
-            </sc-if>
           </sc-for>
         </div>
       </div>
@@ -293,25 +276,39 @@
       <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.7;color:#4d5a6b;border-top:2px solid #1c2735;padding-top:16px;margin-top:20px">
         <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">身分 ROLE</span><br>{{ currentMember.role }}</div>
         <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">研究主題 TOPIC</span><br>{{ currentMember.topic }}</div>
-        <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">EMAIL</span><br><a href="mailto:example@ntu.edu.tw">example@ntu.edu.tw</a></div>
+        <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">EMAIL</span><br><a href="{{ currentMember.mailto }}">{{ currentMember.email }}</a></div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:34px">
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">自我介紹</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">ABOUT ME</span></div>
-        <p style="font-size:14.5px;line-height:2;color:#4d5a6b;margin:0">在此撰寫自我介紹，例如研究興趣、加入實驗室的契機、專長與目標等。（此處內容待補充）</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ currentMember.about }}" as="para" hint-placeholder-count="1">
+            <p style="font-size:14.5px;line-height:2;color:#4d5a6b;margin:0;text-wrap:pretty">{{ para }}</p>
+          </sc-for>
+        </div>
       </div>
+      <sc-if value="{{ currentMember.showInterests }}" hint-placeholder-val="{{ false }}">
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">研究領域</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">RESEARCH INTERESTS</span></div>
         <p style="font-size:14.5px;line-height:2;color:#4d5a6b;margin:0">列出研究領域與關鍵字。（此處內容待補充）</p>
       </div>
+      </sc-if>
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">學歷</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">EDUCATION</span></div>
-        <ul style="font-size:14.5px;line-height:1.9;color:#4d5a6b;margin:0;padding-left:20px"><li>學年 – 學年：學位／學校／地點（此處內容待補充）</li><li>學年 – 學年：學位／學校／地點</li></ul>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ currentMember.edu }}" as="ed" hint-placeholder-count="2">
+            <div style="display:grid;grid-template-columns:110px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid #dcd8cb;font-size:14.5px;line-height:1.7"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a">{{ ed.year }}</span><span style="color:#4d5a6b">{{ ed.text }}</span></div>
+          </sc-for>
+        </div>
       </div>
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">經歷</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">EXPERIENCE</span></div>
-        <ul style="font-size:14.5px;line-height:1.9;color:#4d5a6b;margin:0;padding-left:20px"><li>年份：職稱／單位（此處內容待補充）</li><li>年份：職稱／單位</li></ul>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ currentMember.exp }}" as="ex" hint-placeholder-count="1">
+            <div style="display:grid;grid-template-columns:110px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid #dcd8cb;font-size:14.5px;line-height:1.7"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a">{{ ex.year }}</span><span style="color:#4d5a6b">{{ ex.text }}</span></div>
+          </sc-for>
+        </div>
       </div>
     </div>
   </div>
@@ -566,9 +563,8 @@ class Component extends DCLogic {
 
   applyHash() {
     const h = decodeURIComponent((location.hash || '').replace(/^#\/?/, ''));
-    let [p, mk] = h.split('/');
+    const [p, mk] = h.split('/');
     if (!p || !this.validPage(p)) return false;
-    if (p === 'member' && this._noPageSlots && this._noPageSlots.includes(mk)) { history.replaceState(null, '', '#members'); p = 'members'; mk = undefined; }
     this.setState(p === 'member' ? { page: 'member', selectedMember: mk || null } : { page: p });
     try { localStorage.setItem('bomlab-page', p); if (mk) localStorage.setItem('bomlab-member', mk); } catch (e) {}
     try { window.scrollTo(0, 0); } catch (e) {}
@@ -643,15 +639,15 @@ class Component extends DCLogic {
 
     const homeSlides = [
       { slot: 'home-slide-0', cap: '115-1 中研院兒童科學日', img: 'assets/photos/2026-kids-science-day.jpg' },
-      { slot: 'home-slide-10', cap: '115 教師節', img: 'assets/photos/115-teachers-day.jpg' },
-      { slot: 'home-slide-11', cap: '114 碩士生口試', img: 'assets/photos/114-oral-defense.jpg' },
       { slot: 'home-slide-1', cap: '114-1 導生宴', img: 'assets/photos/0150dc_b7b11e0f139c452883095c9e8e193998-mv2.jpg' },
-      { slot: 'home-slide-12', cap: '114-1 KU Professors Taipei Tour', img: 'assets/photos/0150dc_3a11aa44ef0a42ea9585dc30920a291a-mv2.jpg' },
       { slot: 'home-slide-2', cap: '114-1 KU Professors Lab Tour', img: 'assets/photos/0150dc_649a79d9165f4f14892988359913b5ee-mv2.jpg' },
-      { slot: 'home-slide-13', cap: "114-1 HU Prof's Taipei Tour", img: 'assets/photos/0150dc_7b39e7544cb548c69ba69aa1be4f68c1-mv2.jpg' },
       { slot: 'home-slide-3', cap: '114-1 Hokkaido University Professors Lab Tour', img: 'assets/photos/0150dc_4f87cd7116474af596f0bf657cfecf1d-mv2.jpg' },
       { slot: 'home-slide-4', cap: '114-1 SNU Professors Lab Tour', img: 'assets/photos/0150dc_f77ca05f6e244bfdb0688f56a17dbe61-mv2.jpg' },
-      { slot: 'home-slide-14', cap: '114-1 Non-Destructive Conference Lab Tour', img: 'assets/photos/0150dc_fa37a6b7ea4b4a5dad7e23aff1e45ad4-mv2.jpg' },
+      { slot: 'home-slide-5', cap: '114 教師節', img: 'assets/photos/0150dc_361b8c6ee63f4f3786dcc34245e2fbf1-mv2.jpg' },
+      { slot: 'home-slide-6', cap: '113-2 碩士生口試', img: 'assets/photos/0150dc_ed72f3b291d94cbea522534a9987cbdc-mv2.jpg' },
+      { slot: 'home-slide-7', cap: '113-2 謝師宴', img: 'assets/photos/0150dc_abd2d4a5494e4fdca3a135a8270bd9d4-mv2.jpg' },
+      { slot: 'home-slide-8', cap: '113-2 UIUC 研討會前合影', img: 'assets/photos/0150dc_64220b2e814f44b6a68c73487dd11c46-mv2.jpg' },
+      { slot: 'home-slide-9', cap: '113-1 導生聚', img: 'assets/photos/0150dc_94f3a22bed1a413cb06e807843792594-mv2.jpg' },
     ];
     this._slideCount = homeSlides.length;
     const slideIdx = this.state.slideIdx;
@@ -718,7 +714,7 @@ class Component extends DCLogic {
       { title: '碩士班・碩二', en: 'GRADUATE — SECOND YEAR', items: [
         { name: '林磊', en: 'Lei Lin', topic: 'E-Nose Application', slot: 'mb-llin', img: WIX + '0150dc_e6f29a5be04e479188c9a4a54b3b4aeb-mv2.jpg' },
         { name: '何愷育', en: 'Kai-Yu He', topic: '3D Reconstruction & Gantry Robot', slot: 'mb-kyhe', img: WIX + '0150dc_7e53cc7a328244139572bd0558f55f0d-mv2.jpg' },
-        { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + '0150dc_1a210870b73240ff9ce4583d7e7ed495-mv2.jpg' },
+        { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + 'mb-yjchen-avatar.jpg', photo: WIX + 'mb-yjchen.jpg' },
       ]},
       { title: '碩士班・碩一', en: 'GRADUATE — FIRST YEAR', items: [
         { name: '張曉芹', en: 'Hsiao-Ching Chang', topic: '', slot: 'mb-hcchang', img: WIX + '0150dc_04a7325b63e24e08a9e3cba0d8caa5da-mv2.jpg' },
@@ -741,7 +737,7 @@ class Component extends DCLogic {
         { name: '易峻葦', en: 'Jiun-Wei Yi', topic: '3D Plant Phenotyping', slot: 'mb-jwyi', img: WIX + '0150dc_2d4383ded93b4b679f37fb764e77d74a-mv2.jpg' },
         { name: '許又文', en: 'Yu-Wen Hsu', topic: 'Fluorescence Lifetime', slot: 'mb-ywhsu', img: WIX + '0150dc_a8059c9afd134a6b91836337675a1bcd-mv2.jpg' },
       ]});
-      allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', noPage: true, items: [
+      allGroups.push({ title: '畢業大學部', en: 'GRADUATED B.S. STUDENTS', items: [
         { name: '邱禹甄', en: '', topic: '', slot: 'mb-ycchiu', img: WIX + '0150dc_397ff0d610bc4f08b08e8c6fe5c467ac-mv2.jpg' },
         { name: '劉奕宏', en: '', topic: '', slot: 'mb-yhliu', img: WIX + '0150dc_d8f47c2ff67f4ffcb976be63f6b2245d-mv2.jpg' },
         { name: '黃浩軒', en: '', topic: '', slot: 'mb-hhhuang', img: WIX + '0150dc_2df20f761a33499a9f41e8d7716a2924-mv2.jpg' },
@@ -861,18 +857,46 @@ class Component extends DCLogic {
       items: g.items.map(m => ({
         ...m,
         role: g.title,
-        noPage: !!g.noPage, hasPage: !g.noPage,
         onClick: () => this.goMember(m.slot),
         imgEl: m.img ? mkImg(m.img, m.name, avatarStyle) : React.createElement('div', { style: { width: '100%', height: '100%', borderRadius: '10px', background: '#e7e3d6', color: '#a3813a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Noto Serif TC', serif", fontSize: '30px', fontWeight: 600 } }, m.name.charAt(0)),
       })),
     }));
     const flatMembers = [];
-    memberGroups.forEach(g => g.items.forEach(m => { if (m.hasPage) flatMembers.push(m); }));
-    this._noPageSlots = allGroups.filter(g => g.noPage).flatMap(g => g.items.map(m => m.slot));
+    memberGroups.forEach(g => g.items.forEach(m => flatMembers.push(m)));
     const cm = flatMembers.find(m => m.slot === this.state.selectedMember) || flatMembers[0] || {};
+    // 成員個人頁內容：key 為成員 slot。about 每個字串為一段；未填的欄位顯示待補充提示。
+    const profiles = {
+      'mb-yjchen': {
+        email: 'r14631047@ntu.edu.tw',
+        about: [
+          '本人現為國立臺灣大學生物機電工程學研究所碩士班二年級學生，於國立臺灣大學生物機電工程學系生物光機電實驗室從事研究工作，指導教授為吳筱梅助理教授。主要研究方向為水稻根部根圈氧氣動態量測，研究興趣包含螢光壽命成像技術（Fluorescence Lifetime Imaging, FLIM）、光學感測系統及影像分析，期望透過光學量測技術與影像處理方法，探討植物根部氧氣分布及其動態變化，進一步了解植物根部與周遭環境之交互作用。',
+          '在學士與碩士階段之學習過程中，修習過靜力學、材料力學、機械設計及相關工程核心課程，奠定機械工程與力學分析之理論基礎，並逐步培養工程問題分析與實驗研究能力。此外，具備程式設計、數值分析、光學量測及影像處理之實務經驗，熟悉 Python、MATLAB 與 Solidworks等程式語言及軟體工具，並能將相關技術應用於實驗系統建置、數據處理與研究分析。',
+          '未來研究將持續聚焦於光學感測技術、計算力學與人工智慧之跨領域整合，期望結合有限元素分析、數值模擬及神經網路等方法，發展更精確且有效率的量測與分析技術，並將相關工程方法應用於植物生理研究及智慧農業領域，提升研究成果之學術價值與實務應用潛力。',
+        ],
+        edu: [
+          { year: '2025-迄今', text: '生物機電工程學研究所，國立臺灣大學，台北市，台灣' },
+          { year: '2021-2025', text: '生物產業機電工程學系，國立中興大學，台中市，台灣' },
+          { year: '2018-2021', text: '台北市立麗山高級中學，台北市，台灣' },
+        ],
+        exp: [
+          { year: '2026-迄今', text: '系上英文官網維護小編' },
+          { year: '2025-迄今', text: '實驗室網站小編' },
+          { year: '2026', text: 'APFITA 國際研討會，口頭發表，題目：SPATIOTEMPORAL OXYGEN MAPPING IN THE ROOT ZONE USING A FREQUENCY-DOMAIN FLUORESCENCE LIFETIME IMAGING SYSTEM' },
+          { year: '2026春', text: '電子學與實習，助教' },
+          { year: '2025夏', text: '中央研究院應用科學研究中心，暑期實習，奈米壓印技術實習' },
+        ],
+      },
+    };
+    const pf = profiles[cm.slot] || {};
     const currentMember = {
       name: cm.name || '', en: cm.en || '', topic: cm.topic || '', role: cm.role || '',
-      imgEl: cm.img ? mkImg(cm.img, cm.name, { width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }) : React.createElement('div', { style: { aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a3813a', fontFamily: "'Noto Serif TC', serif", fontSize: '96px', fontWeight: 600 } }, (cm.name || '').charAt(0)),
+      about: (pf.about && pf.about.length) ? pf.about : ['在此撰寫自我介紹，例如研究興趣、加入實驗室的契機、專長與目標等。（此處內容待補充）'],
+      showInterests: !pf.about,
+      edu: (pf.edu && pf.edu.length) ? pf.edu : [{ year: '學年 – 學年', text: '學位／學校／地點（此處內容待補充）' }],
+      exp: (pf.exp && pf.exp.length) ? pf.exp : [{ year: '年份', text: '職稱／單位（此處內容待補充）' }],
+      email: pf.email || 'example@ntu.edu.tw',
+      mailto: 'mailto:' + (pf.email || 'example@ntu.edu.tw'),
+      imgEl: (cm.photo || cm.img) ? mkImg(cm.photo || cm.img, cm.name, { width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }) : React.createElement('div', { style: { aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a3813a', fontFamily: "'Noto Serif TC', serif", fontSize: '96px', fontWeight: 600 } }, (cm.name || '').charAt(0)),
     };
     const eventsEl = events.map(e => ({ ...e, imgEl: mkImg(e.img, e.label, { width: '100%', height: 'auto', display: 'block' }) }));
     const coursesEl = courses.map(c => ({ ...c, imgEl: mkImg(c.img, c.zh, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }) }));

@@ -151,8 +151,15 @@ if (showGraduated) {
   exp: [{ year: '2025夏', text: '單位／職稱…' }],
   interests: [{ title: 'Cell tracking', text: '說明…' }],   // 選填：研究領域區塊；有填才顯示
   motto: '座右銘…',                                         // 選填：自我介紹下方靠右顯示
+  role: '博士班研究生（Ph.D. Student）',                     // 選填：覆寫左側「身分」
+  affiliation: '國立臺灣大學 …',                            // 選填：左側「所屬單位」
+  extra: [                                                  // 選填：學歷、經歷之後的額外區塊
+    { zh: '教學經歷', en: 'TEACHING EXPERIENCE', items: [ { year: '114-2', text: '課程名稱' } ] },
+  ],
 },
 ```
+
+學歷／經歷／extra 的每一列可用欄位：`year`、`title`（粗體標題）、`text`（內文）、`lines: []`（灰色小字，多行）、`bullets: []`（項目符號清單）、`link` + `linkText`（連結，例如 DOI）。只有 `year` + `text` 時與一般列表相同。
 
 - 未填的欄位會顯示「待補充」提示；有填 `about` 時會隱藏「研究領域」區塊。
 - 個人頁照片：成員物件可另加 `photo`（直式 4:5，800×1000）作為個人頁大圖；`img` 用方形大頭照（400×400，臉部置中）作為列表頭像。只有一張時只填 `img`。

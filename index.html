@@ -350,6 +350,9 @@
         <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">身分 ROLE</span><br>{{ currentMember.role }}</div>
         <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">研究主題 TOPIC</span><br>{{ currentMember.topic }}</div>
         <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">EMAIL</span><br><a href="{{ currentMember.mailto }}">{{ currentMember.email }}</a></div>
+        <sc-if value="{{ currentMember.affiliation }}" hint-placeholder-val="{{ false }}">
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a">所屬單位 AFFILIATION</span><br>{{ currentMember.affiliation }}</div>
+        </sc-if>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:34px">
@@ -377,22 +380,25 @@
         </div>
       </div>
       </sc-if>
+      <sc-for list="{{ currentMember.sections }}" as="sec" hint-placeholder-count="2">
       <div>
-        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">學歷</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">EDUCATION</span></div>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">{{ sec.zh }}</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">{{ sec.en }}</span></div>
         <div style="display:flex;flex-direction:column">
-          <sc-for list="{{ currentMember.edu }}" as="ed" hint-placeholder-count="2">
-            <div style="display:flex;gap:16px;padding:10px 0;border-bottom:1px solid #dcd8cb;font-size:14.5px;line-height:1.7"><sc-if value="{{ ed.year }}" hint-placeholder-val="{{ true }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a;flex:0 0 110px">{{ ed.year }}</span></sc-if><span style="color:#4d5a6b;flex:1;min-width:0">{{ ed.text }}</span></div>
+          <sc-for list="{{ sec.items }}" as="ed" hint-placeholder-count="2">
+            <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid #dcd8cb;font-size:14.5px;line-height:1.7">
+              <sc-if value="{{ ed.year }}" hint-placeholder-val="{{ true }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a;flex:0 0 110px">{{ ed.year }}</span></sc-if>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <sc-if value="{{ ed.title }}" hint-placeholder-val="{{ false }}"><span style="font-weight:700;color:#1c2735;text-wrap:pretty">{{ ed.title }}</span></sc-if>
+                <sc-if value="{{ ed.text }}" hint-placeholder-val="{{ true }}"><span style="color:#4d5a6b;text-wrap:pretty">{{ ed.text }}</span></sc-if>
+                <sc-for list="{{ ed.lines }}" as="ln" hint-placeholder-count="0"><span style="color:#7d8494;font-size:13.5px;text-wrap:pretty">{{ ln }}</span></sc-for>
+                <sc-if value="{{ ed.hasBullets }}" hint-placeholder-val="{{ false }}"><ul style="margin:4px 0 0;padding-left:20px;color:#4d5a6b;font-size:14px;line-height:1.8"><sc-for list="{{ ed.bullets }}" as="bl" hint-placeholder-count="0"><li>{{ bl }}</li></sc-for></ul></sc-if>
+                <sc-if value="{{ ed.link }}" hint-placeholder-val="{{ false }}"><a href="{{ ed.link }}" target="_blank" rel="noopener" style="font-size:13px;width:fit-content">{{ ed.linkText }}</a></sc-if>
+              </div>
+            </div>
           </sc-for>
         </div>
       </div>
-      <div>
-        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;border-bottom:2px solid #1c2735;padding-bottom:8px"><h2 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;margin:0">經歷</h2><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#a3813a">EXPERIENCE</span></div>
-        <div style="display:flex;flex-direction:column">
-          <sc-for list="{{ currentMember.exp }}" as="ex" hint-placeholder-count="1">
-            <div style="display:flex;gap:16px;padding:10px 0;border-bottom:1px solid #dcd8cb;font-size:14.5px;line-height:1.7"><sc-if value="{{ ex.year }}" hint-placeholder-val="{{ true }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a;flex:0 0 110px">{{ ex.year }}</span></sc-if><span style="color:#4d5a6b;flex:1;min-width:0">{{ ex.text }}</span></div>
-          </sc-for>
-        </div>
-      </div>
+      </sc-for>
     </div>
   </div>
 </div>
@@ -791,7 +797,7 @@ class Component extends DCLogic {
     const WIX = 'assets/photos/';
     const allGroups = [
       { title: '博士班', en: 'PH.D. STUDENTS', items: [
-        { name: '林正浩', en: 'Cheng-Hao Lin', topic: 'Fluorescence Lifetime', slot: 'mb-chlin', img: WIX + '0150dc_66c3dd766d49436e886df1e36cc6cc3c-mv2.jpg' },
+        { name: '林正浩', en: 'Cheng-Hao Lin', topic: 'Fluorescence Lifetime Imaging Microscopy (FLIM)', slot: 'mb-chlin', img: WIX + 'mb-chlin-avatar.jpg', photo: WIX + 'mb-chlin.jpg' },
         { name: '何佳鴻', en: 'Chia-Hong Ho', topic: 'Cell segmentation and detection', slot: 'mb-chho', img: WIX + 'mb-chho-avatar.jpg', photo: WIX + 'mb-chho.jpg' },
       ]},
       { title: '碩士班・碩二', en: 'GRADUATE — SECOND YEAR', items: [
@@ -955,6 +961,69 @@ class Component extends DCLogic {
     const cm = flatMembers.find(m => m.slot === this.state.selectedMember) || flatMembers[0] || {};
     // 成員個人頁內容：key 為成員 slot。about 每個字串為一段；未填的欄位顯示待補充提示。
     const profiles = {
+      'mb-chlin': {
+        role: '博士班研究生（Ph.D. Student）',
+        email: 'f11631029@ntu.edu.tw',
+        affiliation: '國立臺灣大學 生物資源暨農學院 生物機電工程學系',
+        about: [
+          '目前就讀於國立臺灣大學生物機電工程學系博士班，研究主要聚焦於螢光壽命影像顯微技術（Fluorescence Lifetime Imaging Microscopy, FLIM）、光學量測系統開發及非破壞性檢測上的應用。',
+          '研究工作以 LED-based 頻域螢光壽命影像（Frequency-Domain FLIM, FD-FLIM）為核心，結合光機電整合、顯微影像擷取、螢光壽命計算及科學影像分析，探索植物在逆境下的葉綠素螢光反應。',
+          '除光學與生物影像研究外，亦具備 Python、C++、MATLAB 程式開發、機器學習及網站系統維護經驗，並持續探索人工智慧與科學影像分析技術的整合應用。期望透過光學感測、軟硬體整合及自動化影像分析，發展具備空間解析能力的生物量測工具，促進植物表型學與智慧農業相關研究。',
+        ],
+        interests: [
+          { title: 'Fluorescence Lifetime Imaging Microscopy (FLIM)', text: '螢光壽命影像顯微技術' },
+          { title: 'Optical Imaging and Instrumentation', text: '光學成像與量測儀器開發' },
+          { title: 'Plant Phenotyping and Non-destructive Sensing', text: '植物表型分析與非破壞性量測' },
+          { title: 'Scientific Image Processing and Analysis', text: '科學影像處理與分析' },
+          { title: 'Artificial Intelligence and Machine Learning', text: '人工智慧與機器學習' },
+        ],
+        edu: [
+          { year: '2023 – Present', title: '博士班研究生（逕行修讀博士學位）', text: '國立臺灣大學 生物機電工程學系。Ph.D. Student, Department of Biomechatronics Engineering, National Taiwan University, Taiwan。', lines: ['研究方向：光學非破壞性檢測、螢光壽命影像、顯微影像處理、植物表型分析。'] },
+          { year: '2022 – 2023', title: '碩士班修業（後逕行修讀博士學位，未取得碩士學位）', text: '國立臺灣大學 生物機電工程學系。Master\'s Program Studies, Department of Biomechatronics Engineering, National Taiwan University, Taiwan。' },
+          { year: '2018 – 2022', title: '學士（Bachelor\'s Degree）', text: '國立嘉義大學 生物機電工程學系。B.S., Department of Biomechatronics Engineering, National Chiayi University, Taiwan。', lines: ['修習永續能源與發展相關跨領域學程。'] },
+        ],
+        exp: [
+          { year: '2024.08 – Present', title: 'Full-Stack Web Developer｜全端網頁開發人員', bullets: ['維護 Linux 虛擬機環境中的 Apache Web Server，負責靜態網站託管與相關系統管理。', '使用 Shell Script 建立自動化部署流程，改善網站更新與維護作業。', '獨立完成網站前端開發與相關功能實作。'] },
+          { year: '2023 Fall – 2026 Spring', title: 'Teaching Assistant｜教學助理', text: '國立臺灣大學 生物機電工程學系　Department of Biomechatronics Engineering, National Taiwan University', lines: ['協助生物光機電系統、機電整合、智慧型控制、電子學及生物系統工程等相關課程之教學與課程活動。'] },
+          { year: '2022.07 – 2022.08', title: 'Summer Intern｜暑期實習生', text: '裕隆汽車股份有限公司（Yulon Motor Co., Ltd.）　Intelligent Medical Devices Group, R&D Technical Department', lines: ['參與智慧醫療器材相關研發，接觸機器學習、電路設計、程式開發、機械設計、嵌入式系統設計及 3D 列印等技術。'] },
+        ],
+        extra: [
+          { zh: '教學經歷', en: 'TEACHING EXPERIENCE', items: [
+            { year: '114-2', text: '電子學與實習 — Electronics and Laboratory', lines: ['2026 Spring'] },
+            { year: '114-1', text: '學士專題一 — Thesis for Undergraduate (I)', lines: ['2025 Fall'] },
+            { year: '113-2', text: '生物光機電系統技術與應用 — Bio-Optomechatronics Systems Technology and Applications', lines: ['2025 Spring'] },
+            { year: '113-1', text: '生物系統工程之外國文獻導讀 — Introduction to Foreign Literature on Bio-Systems Engineering', lines: ['2024 Fall'] },
+            { year: '112-2', text: '生物光機電系統技術與應用 — Bio-Optomechatronics Systems Technology and Applications', lines: ['2024 Spring'] },
+            { year: '112-1', text: '智慧型控制 — Intelligent Control', lines: ['2023 Fall'] },
+            { year: '112-1', text: '機電整合與系統設計－機電整合（四） — Mechatronics and System Design – Mechatronics (IV)', lines: ['2023 Fall'] },
+          ]},
+          { zh: '研討會論文', en: 'CONFERENCE PUBLICATIONS', items: [
+            { year: '2026.04', title: 'Frequency-Domain Fluorescence Lifetime Imaging Microscopy for Quantifying Photosynthesis in Plant Cell Micro-phenomics.', text: 'Cheng-Hao Lin, Hsiao-Mei Wu.', lines: ['The Future of Agriculture and Advanced Photonics (FAAP 2026).', 'FAAP 2026 / OPIC 2026 · Yokohama, Japan'] },
+            { year: '2025.10', title: 'A Frequency-Domain FLIM Approach to Uncover Water Stress-Induced Changes in Tomato Leaf Photosynthesis.', text: 'Cheng-Hao Lin, Hsiao-Mei Wu.', lines: ['The 11th Asian-Australasian Conference on Precision Agriculture.', 'ACPA 11 · Chiayi, Taiwan'] },
+            { year: '2025.09', title: 'Two-Dimensional Underwater Crop Root Oxygen Concentration Distribution Analysis Using Frequency-Domain Fluorescence Lifetime Imaging System with Oxygen Sensing Film (Planner Optode).', text: 'ChengHao Lin, YuWen Hsu, Hsiao-Mei Wu.', lines: ['2025 生機與農機學術研討會。', '生機與農機學術研討會 · Taiwan'] },
+            { year: '2025.07', title: 'Quantitative Phenotyping of Water-Stressed Tomato Plants Using Frequency-Domain Fluorescence Lifetime Imaging Microscope (FD-FLIM).', text: 'Cheng-Hao Lin, Jiun-Wei Yi, Hsiao-Mei Wu.', lines: ['American Society of Agricultural and Biological Engineers.', 'ASABE Annual International Meeting · Toronto, Canada'], link: 'https://doi.org/10.13031/aim.202500595', linkText: 'DOI: 10.13031/aim.202500595' },
+            { year: '2024.11', title: 'Monitoring Photosynthesis Efficiency during Plant Growth Using the Frequency-Domain Fluorescence Lifetime Imaging (FD-FLI) System.', text: 'Cheng-Hao Lin, Jiun-Wei Yi, Hsiao-Mei Wu.', lines: ['The 21st International Conference on Automation Technology.', 'Automation 2024 · Taipei, Taiwan'] },
+            { year: '2024.10', title: 'Analyzing Photosynthesis Efficiency Based on Frequency-Domain Fluorescence Lifetime Imaging (FD-FLI) System.', text: '林正浩、易峻葦、吳筱梅。', lines: ['2024 農機與生機學術研討會。', '農機與生機學術研討會 · Taichung, Taiwan'] },
+            { year: '2024.09', title: 'Detection of Water Stress in Tomato Leaves Using Frequency-Domain Chlorophyll Fluorescence Lifetime Imaging System.', text: 'Cheng-Hao Lin, Jiun-Wei Yi, Hsiao-Mei Wu.', lines: ['The 11th International Symposium on Machinery and Mechatronics for Agriculture and Biosystems Engineering.', 'ISMAB 2024 · Bali, Indonesia'] },
+          ]},
+          { zh: '其他學術發表與交流', en: 'OTHER ACADEMIC PRESENTATIONS', items: [
+            { year: '2025.08', title: 'ACMT Joint Workshop, Taiwan', text: 'Quantifying Tomato Leaf Photosynthesis using an LED-based FD Fluorescence Lifetime Imaging Microscopy.' },
+            { year: '2025.07', title: 'UIUC-NTU Joint Workshop, USA', text: 'Development of an LED-based FD-FLIM System for Chlorophyll a Fluorescence Lifetime Analysis in Water-Stressed Tomato Leaves.' },
+            { year: '2025.04', title: 'OPIC 2025 / FAAP, Yokohama, Japan', text: 'Early Detection of Water Stress in Plants using Frequency-Domain Fluorescence Lifetime Imaging Microscopy (FD-FLIM).' },
+            { year: '2024.12', title: '國科會生農環境與多樣性學門成果發表會, Taiwan', text: 'Development of High-Frequency LED-Modulated Frequency-Domain FLIM System with Potential Applications in Plant Phenotyping.' },
+          ]},
+          { zh: '資格認證', en: 'CERTIFICATIONS & CREDENTIALS', items: [
+            { year: '2026.09', title: 'Engineer AI Agents with Agent Development Kit (ADK)', text: 'Google', lines: ['Skill Badge · Intermediate', '技能：Google Agent Development Kit (ADK)、Large Language Models (LLM)'] },
+            { year: '2026.08', title: 'NVIDIA Isaac for Accelerated Robotics', text: 'NVIDIA', lines: ['證照編號：M9rBYddPSzSVQl6ZLxeQVA', '技能：Isaac、OpenUSD'] },
+            { year: '2026.06', title: '建造以 Transformer 為基礎的自然語言處理應用', text: 'NVIDIA', lines: ['證照編號：1XYeLrvhSB6ipHNVxiTCCg', '技能：PyTorch、Large Language Models (LLM)'] },
+            { year: '2026.06', title: 'NVIDIA-Certified Associate: Accelerated Data Science', text: 'NVIDIA', lines: ['Professional Certification · 有效期限：2028.06', '技能：資料分析、大數據'] },
+            { year: '2026.02', title: '運用 NVIDIA Isaac 開發高效機器人', text: 'NVIDIA', lines: ['證照編號：1N48kAOwTgGmxzzOCt4sKg｜技能：NVIDIA Isaac'] },
+            { year: '2026.02', title: 'NVIDIA-Certified Associate: Generative AI LLMs', text: 'NVIDIA', lines: ['Professional Certification · 有效期限：2028.02'] },
+            { year: '2025.08', title: '深度學習基礎理論與實踐', text: 'NVIDIA', lines: ['證照編號：7gwS9baxROqeOHp5eMBcMQ#'] },
+            { year: '2025.08', title: '透過 Jetson Nano 開發人工智慧應用', text: 'NVIDIA', lines: ['證照編號：2ri_QOaeSBmbE3JEuLDNXA#'] },
+          ]},
+        ],
+      },
       'mb-byliu': {
         email: 'r15631002@ntu.edu.tw',
         about: [
@@ -1077,8 +1146,18 @@ class Component extends DCLogic {
       },
     };
     const pf = profiles[cm.slot] || {};
+    const normRows = arr => arr.map(e => ({ year: e.year || '', title: e.title || '', text: e.text || '', lines: e.lines || [], bullets: e.bullets || [], hasBullets: !!(e.bullets && e.bullets.length), link: e.link || '', linkText: e.linkText || e.link || '' }));
+    const eduRows = (pf.edu && pf.edu.length) ? pf.edu : [{ year: '學年 – 學年', text: '學位／學校／地點（此處內容待補充）' }];
+    const expRows = (pf.exp && pf.exp.length) ? pf.exp : [{ year: '年份', text: '職稱／單位（此處內容待補充）' }];
+    const sections = [
+      { zh: '學歷', en: 'EDUCATION', items: normRows(eduRows) },
+      { zh: '經歷', en: 'EXPERIENCE', items: normRows(expRows) },
+      ...(pf.extra || []).map(s => ({ zh: s.zh, en: s.en, items: normRows(s.items || []) })),
+    ];
     const currentMember = {
-      name: cm.name || '', en: cm.en || '', topic: cm.topic || '', role: cm.role || '',
+      sections,
+      affiliation: pf.affiliation || '',
+      name: cm.name || '', en: cm.en || '', topic: cm.topic || '', role: pf.role || cm.role || '',
       about: (pf.about && pf.about.length) ? pf.about : ['在此撰寫自我介紹，例如研究興趣、加入實驗室的契機、專長與目標等。（此處內容待補充）'],
       showInterests: !pf.about || !!pf.interests,
       motto: pf.motto || '',

@@ -812,7 +812,7 @@ class Component extends DCLogic {
       ]},
       { title: '大學部專題生', en: 'B.S. STUDENTS', items: [
         { name: '沈新倫', en: 'Shin-Lun Shen', topic: '', slot: 'mb-slshen', img: '' },
-        { name: '郭以澂', en: 'Yi-Cheng Kuo', topic: '', slot: 'mb-yckuo', img: '' },
+        { name: '郭以澂', en: 'Yi-Cheng Kuo', topic: 'Fluorescence Lifetime Imaging Microscopy (FLIM)', slot: 'mb-yckuo', img: WIX + 'mb-yckuo-avatar.jpg', photo: WIX + 'mb-yckuo.jpg' },
       ]},
     ];
     if (showGraduated) {
@@ -961,6 +961,26 @@ class Component extends DCLogic {
     const cm = flatMembers.find(m => m.slot === this.state.selectedMember) || flatMembers[0] || {};
     // 成員個人頁內容：key 為成員 slot。about 每個字串為一段；未填的欄位顯示待補充提示。
     const profiles = {
+      'mb-yckuo': {
+        role: '台大生物機電工程學系 大三・實驗室專題研究生',
+        email: 'b13611009@ntu.edu.tw',
+        about: [
+          '目前就讀於國立臺灣大學生物機電工程學系三年級，在大學期間透過不同領域的課程學習，修習電機相關課程，如電子電工學，修習機械工程相關課程，包括應力分析、材料力學及熱力學，也接觸演算法及人工智慧概論等軟體相關課程，並學習 AUTOCAD、Arduino 等軟體，逐漸拓展自身的工程視野，並對電機、機械與資訊技術之間的整合應用產生興趣。',
+          '目前在吳筱梅教授的指導下進行大學生專題研究，加入實驗室後，開始接觸螢光相關知識及螢光壽命影像（Fluorescence Lifetime Imaging Microscopy, FLIM）技術，學習其基本原理、量測方法及相關應用。透過專題研究的過程，結合目前所學專業科目知識，逐步熟悉研究方法、實驗操作及問題分析，並藉由文獻閱讀與實驗探索，深入了解研究領域的相關技術。對螢光影像及相關研究有更進一步的認識，也使我在探索自身興趣與未來發展方向。',
+          '未來希望能持續累積專業知識與研究經驗，並拓展國際視野，海外交流或赴國外學習，接觸不同的研究環境與技術發展。在未來的研究方向上，期望能結合過去所累積的知識，尋找跨領域工程應用與研究的可能性。',
+        ],
+        edu: [
+          { year: '2024 - 迄今', text: '台灣大學 生物機電工程學系' },
+          { year: '2022 – 2024', text: '台北市立成功高級中學' },
+        ],
+        exp: [
+          { year: '2026 - 迄今', text: '實驗室專題研究生' },
+          { year: '2025', text: '系上籃球系隊 副隊長' },
+          { year: '2024', text: '113-2 學期 生物機電工程學系書卷獎' },
+          { year: '2024', text: '113-1 學期 生物機電工程學系書卷獎' },
+          { year: '2023', text: 'LEGO 機器人研究社 副社長' },
+        ],
+      },
       'mb-chlin': {
         role: '博士班研究生（Ph.D. Student）',
         email: 'f11631029@ntu.edu.tw',

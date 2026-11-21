@@ -784,14 +784,14 @@ class Component extends DCLogic {
     ];
 
     const researchTopics = [
-      { num: '01', zh: '螢光壽命', en: 'Fluorescence Lifetime', slot: 'rs-flim', ph: 'FLIM 成果圖', img: 'assets/photos/0150dc_c420c95c579847888744c7880d743f17-mv2.jpg' },
-      { num: '02', zh: '螢光成像', en: 'Fluorescence Imaging', slot: 'rs-fimg', ph: '螢光成像圖', img: 'assets/photos/0150dc_2fd3095de5504b48adfe1137b79ab8e7-mv2.jpg' },
-      { num: '03', zh: '細胞分割與追蹤', en: 'Cell Segmentation & Tracking', slot: 'rs-cell', ph: '細胞分割/追蹤圖', img: 'assets/photos/cell_segmentation.jpg' },
-      { num: '04', zh: '細胞培養', en: 'Cell Culture', slot: 'rs-culture', ph: '細胞培養照片', img: 'assets/photos/cell_culture.jpg' },
-      { num: '05', zh: '樂高顯微鏡', en: 'LEGO Microscope', slot: 'rs-lego', ph: '樂高顯微鏡照片', img: 'assets/photos/0150dc_18728f50adac4940b8a90c96919a9827-mv2.jpg' },
-      { num: '06', zh: 'LEMOLish 樂高光片顯微鏡', en: 'LEGO Light-Sheet Microscope', slot: 'rs-lemolish', ph: 'LEMOLish 照片', img: 'assets/photos/0150dc_5d3bef575dee470c9f28630a83c25f75-mv2.jpg' },
-      { num: '07', zh: '三維植物表型分析', en: '3D Plant Phenotyping', slot: 'rs-3d', ph: '番茄 3D 重建圖', img: 'assets/photos/0150dc_35dc411b208f44ecba4e98aff37be991-mv2.jpg' },
-      { num: '08', zh: '電子鼻應用', en: 'E-Nose Application', slot: 'rs-enose', ph: '電子鼻裝置照片', img: 'assets/photos/0150dc_581c7ad867b54e07903a5d1e95cd15dc-mv2.jpg' },
+      { num: '01', zh: '三維植物重建', en: '3D Plant Reconstruction', slot: 'rs-3d-plant', ph: '三維植物重建', img: 'assets/photos/rs-3d-plant.jpg' },
+      { num: '02', zh: '三維重建與葉綠素螢光反應', en: '3D Reconstruction & ChlF Response', slot: 'rs-3d-chlf', ph: '三維重建與葉綠素螢光反應', img: 'assets/photos/rs-3d-chlf.jpg' },
+      { num: '03', zh: '可現場部署之血氣屏障模型', en: 'Field-Deployable Blood-Air Barrier Model', slot: 'rs-blood-air', ph: '可現場部署之血氣屏障模型', img: 'assets/photos/rs-blood-air.jpg' },
+      { num: '04', zh: '水稻根圈 FLIM 氧氣成像', en: 'FLIM Oxygen Imaging of the Rice Root Zone', slot: 'rs-rice-root-flim', ph: '水稻根圈 FLIM 氧氣成像', img: 'assets/photos/rs-rice-root-flim.jpg' },
+      { num: '05', zh: '螢光壽命與光合作用反應', en: 'Fluorescence Lifetime to Photosynthetic Response', slot: 'rs-flim-photosyn', ph: '螢光壽命與光合作用反應', img: 'assets/photos/rs-flim-photosyn.jpg' },
+      { num: '06', zh: '樂高光片顯微鏡', en: 'LEGO Light-sheet Microscope', slot: 'rs-lego-lightsheet', ph: '樂高光片顯微鏡', img: 'assets/photos/rs-lego-lightsheet.jpg' },
+      { num: '07', zh: '樂高顯微鏡', en: 'LEGO Microscope', slot: 'rs-lego-microscope', ph: '樂高顯微鏡', img: 'assets/photos/rs-lego-microscope.jpg' },
+      { num: '08', zh: '單株植物 CO₂ 交換', en: 'Single-Plant CO2 Exchange', slot: 'rs-co2-exchange', ph: '單株植物 CO₂ 交換', img: 'assets/photos/rs-co2-exchange.jpg' },
     ];
 
     const WIX = 'assets/photos/';
@@ -942,7 +942,7 @@ class Component extends DCLogic {
     const researchTopicsEl = researchTopics.map(r => ({
       ...r,
       hasImg: !!r.img, noImg: !r.img,
-      imgEl: mkImg(r.img, r.en, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }),
+      imgEl: mkImg(r.img, r.en, { width: '100%', height: '100%', objectFit: 'contain', background: '#ffffff', display: 'block' }),
     }));
     const avatarStyle = { width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px', display: 'block' };
     const memberGroups = allGroups.map(g => ({

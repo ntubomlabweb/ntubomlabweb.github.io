@@ -443,9 +443,44 @@
   <div style="background:repeating-linear-gradient(45deg, rgba(255,255,255,0.045) 0 2px, transparent 2px 18px), radial-gradient(circle at 88% 22%, rgba(217,168,107,0.15), transparent 45%), radial-gradient(circle at 8% 90%, rgba(90,150,220,0.13), transparent 50%), #16283e;color:#f1efe8;position:relative;overflow:hidden">
     <div style="max-width:1160px;margin:0 auto;padding:44px clamp(16px,4vw,32px) 40px">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;color:#d9a86b;margin-bottom:10px">EVENT PHOTOS</div>
-      <h1 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(30px,7.5vw,44px);margin:0">活動花絮</h1>
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px">
+        <h1 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(30px,7.5vw,44px);margin:0">活動花絮</h1>
+        <button onClick="{{ openShow }}" style="display:flex;align-items:center;gap:10px;background:#d9a86b;color:#16283e;border:0;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s" style-hover="background:#f1efe8;transform:translateY(-2px)"><span style="font-size:12px">▶</span>幻燈片播放 Slideshow</button>
+      </div>
     </div>
   </div>
+  <sc-if value="{{ showOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:200;background:#0c1522;color:#f1efe8;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px clamp(16px,4vw,32px)">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d9a86b">{{ showCount }}</span>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ togglePlay }}" style="background:transparent;color:#f1efe8;border:1px solid rgba(241,239,232,.35);border-radius:999px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:inherit">{{ playLabel }}</button>
+        <button onClick="{{ closeShow }}" aria-label="關閉" style="background:transparent;color:#f1efe8;border:1px solid rgba(241,239,232,.35);border-radius:999px;width:38px;height:38px;font-size:18px;cursor:pointer">✕</button>
+      </div>
+    </div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 clamp(8px,3vw,24px)">
+      <button onClick="{{ showPrev }}" aria-label="上一張" style="flex:none;background:rgba(241,239,232,.1);color:#f1efe8;border:0;border-radius:50%;width:46px;height:46px;font-size:20px;cursor:pointer">‹</button>
+      <div style="flex:1;min-width:0;height:100%;display:flex;align-items:center;justify-content:center">
+        {{ showImgEl }}
+      </div>
+      <button onClick="{{ showNext }}" aria-label="下一張" style="flex:none;background:rgba(241,239,232,.1);color:#f1efe8;border:0;border-radius:50%;width:46px;height:46px;font-size:20px;cursor:pointer">›</button>
+    </div>
+    <div style="text-align:center;padding:18px 16px 6px;display:flex;justify-content:center;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d9a86b">{{ showSem }}</span>
+      <span style="font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(18px,3vw,24px)">{{ showLabel }}</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,22px);padding:10px 16px 26px">
+      <span style="height:1px;width:clamp(28px,10vw,120px);background:linear-gradient(90deg,transparent,#d9a86b)"></span>
+      <span style="width:6px;height:6px;border:1px solid #d9a86b;transform:rotate(45deg);flex:none"></span>
+      <div style="display:flex;align-items:baseline;gap:clamp(8px,1.6vw,14px);white-space:nowrap">
+        <span style="font-family:'Noto Serif TC',serif;font-style:italic;font-weight:400;font-size:clamp(15px,2.2vw,20px);color:rgba(241,239,232,.78);letter-spacing:.04em">Welcome to</span>
+        <span style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(22px,3.6vw,32px);letter-spacing:.14em;color:#d9a86b">BOM<span style="color:#f1efe8;font-weight:400;margin-left:.3em;letter-spacing:.08em">Lab</span></span>
+      </div>
+      <span style="width:6px;height:6px;border:1px solid #d9a86b;transform:rotate(45deg);flex:none"></span>
+      <span style="height:1px;width:clamp(28px,10vw,120px);background:linear-gradient(90deg,#d9a86b,transparent)"></span>
+    </div>
+  </div>
+  </sc-if>
   <div style="max-width:1160px;margin:0 auto;padding:48px clamp(16px,4vw,32px)">
     <div data-r="cols" style="column-count:3;column-gap:24px">
       <sc-for list="{{ events }}" as="ev" hint-placeholder-count="9">
@@ -627,11 +662,27 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showGraduated&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;成員頁 Members&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', slideIdx: 0, selectedMember: null };
+  state = { page: 'home', slideIdx: 0, selectedMember: null, showOpen: false, showIdx: 0, showPlaying: true };
+
+  startShowTimer() {
+    clearInterval(this._showT);
+    this._showT = setInterval(() => { if (this.state.showOpen && this.state.showPlaying) this.setState(s => ({ showIdx: (s.showIdx + 1) % (this._evN || 1) })); }, 4000);
+  }
+
+  stopShowTimer() { clearInterval(this._showT); }
 
   componentDidMount() {
     this._onHash = () => this.applyHash();
     window.addEventListener('hashchange', this._onHash);
+    this._onKey = e => {
+      if (!this.state.showOpen) return;
+      const n = this._evN || 1;
+      if (e.key === 'Escape') { this.setState({ showOpen: false }); this.stopShowTimer(); }
+      else if (e.key === 'ArrowRight') { this.setState(s => ({ showIdx: (s.showIdx + 1) % n })); this.startShowTimer(); }
+      else if (e.key === 'ArrowLeft') { this.setState(s => ({ showIdx: (s.showIdx - 1 + n) % n })); this.startShowTimer(); }
+      else if (e.key === ' ') { e.preventDefault(); this.setState(s => ({ showPlaying: !s.showPlaying })); }
+    };
+    window.addEventListener('keydown', this._onKey);
     if (!this.applyHash()) {
       try {
         const p = localStorage.getItem('bomlab-page');
@@ -644,6 +695,8 @@ class Component extends DCLogic {
 
   componentWillUnmount() {
     window.removeEventListener('hashchange', this._onHash);
+    window.removeEventListener('keydown', this._onKey);
+    this.stopShowTimer();
   }
 
   validPage(p) {
@@ -802,7 +855,7 @@ class Component extends DCLogic {
       ]},
       { title: '碩士班・碩二', en: 'GRADUATE — SECOND YEAR', items: [
         { name: '林磊', en: 'Lei Lin', topic: '植物氣體交換量測與系統整合', slot: 'mb-llin', img: WIX + 'mb-llin-avatar.jpg', photo: WIX + 'mb-llin.jpg' },
-        { name: '何愷育', en: 'Kai-Yu He', topic: 'CHIF+3D reconstruction', slot: 'mb-kyhe', img: WIX + 'mb-kyhe-avatar.jpg', photo: WIX + 'mb-kyhe.jpg' },
+        { name: '何愷育', en: 'Kai-Yu He', topic: 'CHIF+3D reconstruction', slot: 'mb-kyhe', img: WIX + 'mb-kyhe-avatar-v2.jpg', photo: WIX + 'mb-kyhe-v2.jpg' },
         { name: '陳宥任', en: 'You-Jen Chen', topic: 'Fluorescence Lifetime', slot: 'mb-yjchen', img: WIX + 'mb-yjchen-avatar.jpg', photo: WIX + 'mb-yjchen.jpg' },
       ]},
       { title: '碩士班・碩一', en: 'GRADUATE — FIRST YEAR', items: [
@@ -848,6 +901,7 @@ class Component extends DCLogic {
       { sem: '115-1', label: '中研院兒童科學日', slot: 'ev-00', img: 'assets/photos/2026-kids-science-day.jpg' },
       { sem: '115', label: '教師節', slot: 'ev-00b', img: 'assets/photos/115-teachers-day.jpg' },
       { sem: '114', label: '碩士生口試', slot: 'ev-00c', img: 'assets/photos/114-oral-defense.jpg' },
+      { sem: '114-1', label: '實驗室出差', slot: 'ev-114-1-trip', img: 'assets/photos/114-1-trip-kyhe.jpg' },
       { sem: '114-1', label: '導生宴', slot: 'ev-01', img: WIX + '0150dc_b7b11e0f139c452883095c9e8e193998-mv2.jpg' },
       { sem: '114-1', label: 'KU Professors Taipei Tour', slot: 'ev-02', img: WIX + '0150dc_3a11aa44ef0a42ea9585dc30920a291a-mv2.jpg' },
       { sem: '114-1', label: 'KU Professors Lab Tour', slot: 'ev-03', img: WIX + '0150dc_649a79d9165f4f14892988359913b5ee-mv2.jpg' },
@@ -1221,6 +1275,24 @@ class Component extends DCLogic {
       goContact: () => this.go('contact'),
       goResearch: () => this.go('research'),
       goPhotos: () => this.go('photos'),
+      ...(() => {
+        const n = events.length || 1;
+        this._evN = n;
+        const i = Math.min(this.state.showIdx, n - 1);
+        const ev = events[i] || {};
+        return {
+          showOpen: this.state.showOpen,
+          showImgEl: ev.img ? React.createElement('img', { key: ev.img, src: ev.img, alt: ev.label || '', style: { maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: '6px', boxShadow: '0 20px 50px rgba(0,0,0,.45)' } }) : null,
+          showLabel: ev.label || '', showSem: ev.sem || '',
+          showCount: (i + 1) + ' / ' + n,
+          playLabel: this.state.showPlaying ? '❚❚ 暫停' : '▶ 播放',
+          openShow: () => { this.setState({ showOpen: true, showIdx: 0, showPlaying: true }); this.startShowTimer(); },
+          closeShow: () => { this.setState({ showOpen: false }); this.stopShowTimer(); },
+          togglePlay: () => this.setState(s => ({ showPlaying: !s.showPlaying })),
+          showPrev: () => { this.setState(s => ({ showIdx: (s.showIdx - 1 + n) % n })); this.startShowTimer(); },
+          showNext: () => { this.setState(s => ({ showIdx: (s.showIdx + 1) % n })); this.startShowTimer(); },
+        };
+      })(),
       goMembers: () => this.go('members'),
       goProf: () => this.go('prof'),
       goPubs: () => this.go('pubs'),

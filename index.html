@@ -168,9 +168,9 @@
     <div>
       <div style="position:relative;border-radius:10px;overflow:hidden;background:#16283e">
         <div style="overflow:hidden">
-          <div style="display:flex;width:1000%;transition:transform .55s cubic-bezier(.45,0,.15,1);transform:translateX(-{{ slideShift }})">
-            <sc-for list="{{ homeSlides }}" as="sl" hint-placeholder-count="10">
-              <div style="flex:0 0 10%;width:10%">
+          <div style="display:flex;width:1100%;transition:transform .55s cubic-bezier(.45,0,.15,1);transform:translateX(-{{ slideShift }})">
+            <sc-for list="{{ homeSlides }}" as="sl" hint-placeholder-count="11">
+              <div style="flex:0 0 9.0909%;width:9.0909%">
                 <div style="aspect-ratio:16/9;background:#0f1d30">
                   {{ sl.imgEl }}
                 </div>
@@ -183,7 +183,7 @@
         <span onClick="{{ nextSlide }}" style="position:absolute;top:calc(50% - 22px);right:14px;width:44px;height:44px;border-radius:50%;background:rgba(22,40,62,.55);color:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .2s;backdrop-filter:blur(4px)" style-hover="background:#d9a86b;color:#16283e">→</span>
       </div>
       <div style="display:flex;gap:9px;justify-content:center;margin-top:16px">
-        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="10">
+        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="11">
           <button onClick="{{ d.onClick }}" style="{{ d.style }}"></button>
         </sc-for>
       </div>
@@ -781,6 +781,7 @@ class Component extends DCLogic {
     const showGraduated = this.props.showGraduated ?? true;
 
     const homeSlides = [
+      { slot: 'home-slide-115dinner', cap: '115-1 導生宴', img: 'assets/photos/115-1-advisor-dinner.jpg' },
       { slot: 'home-slide-apfita', cap: '115-1 APFITA 2026', img: 'assets/photos/apfita2026-group.jpg' },
       { slot: 'home-slide-0', cap: '115-1 中研院兒童科學日', img: 'assets/photos/2026-kids-science-day.jpg' },
       { slot: 'home-slide-115td', cap: '115 教師節', img: 'assets/photos/115-teachers-day.jpg' },
@@ -895,6 +896,7 @@ class Component extends DCLogic {
     ];
 
     const events = [
+      { sem: '115-1', label: '導生宴', slot: 'ev-115-1-dinner', img: 'assets/photos/115-1-advisor-dinner.jpg' },
       { sem: '115-1', label: 'APFITA 2026 合照', slot: 'ev-apfita-group', img: 'assets/photos/apfita2026-group.jpg' },
       { sem: '115-1', label: 'APFITA 2026 口頭發表｜陳宥任', slot: 'ev-apfita-yjchen', img: 'assets/photos/apfita2026-yjchen.jpg' },
       { sem: '115-1', label: 'APFITA 2026 口頭發表｜何愷育', slot: 'ev-apfita-kyhe', img: 'assets/photos/apfita2026-kyhe.jpg' },

@@ -98,6 +98,30 @@
     <div style="display:flex;flex-direction:column">
       <div data-r="stack" style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:2px solid #1c2735;align-items:start">
         <div>
+          <div style="position:relative;aspect-ratio:3/2;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16);background:#0f1d30">
+            <div style="display:flex;width:900%;height:100%;transition:transform .55s cubic-bezier(.45,0,.15,1);transform:translateX(-{{ newsShowShift }})">
+              <sc-for list="{{ newsShow }}" as="ns" hint-placeholder-count="9">
+                <div style="flex:0 0 11.1111%;width:11.1111%;height:100%">{{ ns.imgEl }}</div>
+              </sc-for>
+            </div>
+            <span onClick="{{ newsShowPrev }}" style="position:absolute;top:calc(50% - 16px);left:8px;width:32px;height:32px;border-radius:50%;background:rgba(22,40,62,.55);color:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s" style-hover="background:#d9a86b;color:#16283e">←</span>
+            <span onClick="{{ newsShowNext }}" style="position:absolute;top:calc(50% - 16px);right:8px;width:32px;height:32px;border-radius:50%;background:rgba(22,40,62,.55);color:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s" style-hover="background:#d9a86b;color:#16283e">→</span>
+            <span style="position:absolute;right:10px;bottom:8px;padding:2px 8px;border-radius:10px;background:rgba(22,40,62,.6);color:#f1efe8;font-family:'IBM Plex Mono',monospace;font-size:11px">{{ newsShowCount }}</span>
+          </div>
+          <div style="display:flex;gap:7px;justify-content:center;margin-top:10px">
+            <sc-for list="{{ newsShowDots }}" as="d" hint-placeholder-count="9">
+              <button onClick="{{ d.onClick }}" style="{{ d.style }}"></button>
+            </sc-for>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a3813a;margin-top:10px">VISIT · TAIPEI FIRST GIRLS HIGH SCHOOL</div>
+        </div>
+        <div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a3813a">2026.11.23</span>
+          <div style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:26px;line-height:1.45;margin:8px 0 12px">北一女數資班Lab Tour順利結束。特別感謝子嫣學姊回來分享求學歷程心得！</div>
+        </div>
+      </div>
+      <div data-r="stack" style="display:grid;grid-template-columns:400px 1fr;gap:32px;padding:26px 0 30px;border-top:1px solid #cbc8b8;align-items:start">
+        <div>
           <div style="aspect-ratio:3/2;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(22,40,62,.16)">
             <img loading="lazy" src="assets/photos/apfita2026-group.jpg" alt="APFITA 2026" style="width:100%;height:100%;object-fit:cover;object-position:center 62%;display:block">
           </div>
@@ -663,7 +687,12 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showGraduated&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;成員頁 Members&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', slideIdx: 0, selectedMember: null, showOpen: false, showIdx: 0, showPlaying: true };
+  state = { page: 'home', slideIdx: 0, selectedMember: null, showOpen: false, showIdx: 0, showPlaying: true, newsIdx: 0 };
+
+  startNewsTimer() {
+    clearInterval(this._newsT);
+    this._newsT = setInterval(() => { if (this.state.page === 'home') this.setState(s => ({ newsIdx: (s.newsIdx + 1) % (this._newsN || 1) })); }, 3500);
+  }
 
   startShowTimer() {
     clearInterval(this._showT);
@@ -684,6 +713,7 @@ class Component extends DCLogic {
       else if (e.key === ' ') { e.preventDefault(); this.setState(s => ({ showPlaying: !s.showPlaying })); }
     };
     window.addEventListener('keydown', this._onKey);
+    this.startNewsTimer();
     if (!this.applyHash()) {
       try {
         const p = localStorage.getItem('bomlab-page');
@@ -698,6 +728,7 @@ class Component extends DCLogic {
     window.removeEventListener('hashchange', this._onHash);
     window.removeEventListener('keydown', this._onKey);
     this.stopShowTimer();
+    clearInterval(this._newsT);
   }
 
   validPage(p) {
@@ -1306,6 +1337,25 @@ class Component extends DCLogic {
       goMembers: () => this.go('members'),
       goProf: () => this.go('prof'),
       goPubs: () => this.go('pubs'),
+      ...(() => {
+        // 最新消息：北一女數資班參訪 小幻燈片
+        const newsShow = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(k => 'assets/photos/115-1-tfghs-visit-' + k + '.jpg');
+        const n = newsShow.length;
+        this._newsN = n;
+        const i = this.state.newsIdx % n;
+        const go = d => { this.setState(s => ({ newsIdx: (s.newsIdx + d + n) % n })); this.startNewsTimer(); };
+        return {
+          newsShow: newsShow.map(src => ({ imgEl: mkImg(src, '北一女數資班參訪', { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }) })),
+          newsShowShift: (i * (100 / n)) + '%',
+          newsShowCount: (i + 1) + ' / ' + n,
+          newsShowPrev: () => go(-1),
+          newsShowNext: () => go(1),
+          newsShowDots: newsShow.map((s, k) => ({
+            onClick: () => { this.setState({ newsIdx: k }); this.startNewsTimer(); },
+            style: { width: '7px', height: '7px', borderRadius: '50%', border: 'none', padding: 0, cursor: 'pointer', transition: 'all .25s', background: k === i ? '#d9a86b' : '#c7c2b2', transform: k === i ? 'scale(1.25)' : 'scale(1)' },
+          })),
+        };
+      })(),
       homeSlides: homeSlidesEl, slideIdx, slideShift, dots,
       prevSlide: () => this.moveSlide(-1),
       nextSlide: () => this.moveSlide(1),
